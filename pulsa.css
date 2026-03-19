@@ -1,0 +1,43 @@
+/**
+ * ██████╗ ██╗   ██╗██╗     ███████╗ █████╗
+ * ██╔══██╗██║   ██║██║     ██╔════╝██╔══██╗
+ * ██████╔╝██║   ██║██║     ███████╗███████║
+ * ██╔═══╝ ██║   ██║██║     ╚════██║██╔══██║
+ * ██║     ╚██████╔╝███████╗███████║██║  ██║
+ * ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝
+ *
+ * Pulsa CSS Framework v2.0
+ * Design system modulaire dark-first — 300+ composants, thèmes, animations.
+ *
+ * USAGE — Import complet :
+ *   @import 'pulsa/pulsa.css';
+ *
+ * USAGE — Import partiel (recommandé pour réduire le bundle) :
+ *   @import 'pulsa/pulsa-tokens.css';     ← REQUIS en premier
+ *   @import 'pulsa/pulsa-base.css';       ← Reset + body
+ *   @import 'pulsa/pulsa-animations.css'; ← Keyframes + classes
+ *   @import 'pulsa/pulsa-components.css'; ← Tous les composants UI
+ *   @import 'pulsa/pulsa-forms.css';      ← Formulaires
+ *   @import 'pulsa/pulsa-layout.css';     ← Structures de page
+ *   @import 'pulsa/pulsa-utilities.css';  ← Classes utilitaires
+ *
+ * CONFIGURATION HTML :
+ *   <html data-theme="dark" data-accent="rose">
+ *   <body class="pulsa-bg-glow">
+ *
+ * THÈMES  : data-theme="dark" | "light"
+ * ACCENTS : data-accent="rose" | "purple" | "blue" | "green" | "orange" | "pink"
+ */
+
+@import './pulsa-tokens.css';
+@import './pulsa-base.css';
+@import './pulsa-animations.css';
+@import './pulsa-components.css';
+@import './pulsa-forms.css';
+@import './pulsa-layout.css';
+@import './pulsa-extras.css';
+@import './pulsa-universal.css';
+@import './pulsa-additions.css';
+@import './pulsa-missing.css';
+@import './pulsa-mega.css';
+@import './pulsa-utilities.css';

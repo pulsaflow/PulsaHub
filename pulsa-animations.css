@@ -1,0 +1,238 @@
+/**
+ * Pulsa CSS Framework - Animations
+ * Keyframes, classes d'entrée, micro-interactions, hover effects,
+ * effets de survol, transitions avancées.
+ * Dépend de pulsa-tokens.css
+ */
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* Entrées */
+@keyframes pulsa-fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulsa-fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(8px); }
+}
+@keyframes pulsa-fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulsa-fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulsa-slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulsa-slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulsa-slideInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulsa-scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pulsa-scaleInBounce {
+  0%   { opacity: 0; transform: scale(0.85); }
+  70%  { opacity: 1; transform: scale(1.04); }
+  100% {             transform: scale(1); }
+}
+@keyframes pulsa-popIn {
+  0%   { opacity: 0; transform: scale(0.5); }
+  80%  { opacity: 1; transform: scale(1.1); }
+  100% {             transform: scale(1); }
+}
+
+/* Boucle */
+@keyframes pulsa-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes pulsa-pulseSlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(0.97); }
+}
+@keyframes pulsa-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes pulsa-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes pulsa-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulsa-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* Shimmer / skeleton */
+@keyframes pulsa-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes pulsa-shimmerAlt {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Spécifiques */
+@keyframes pulsa-statBarFill {
+  from { width: 0; }
+  to   { width: calc(100% * var(--pulsa-stat-ratio, 0)); }
+}
+@keyframes pulsa-progressFill {
+  from { width: 0; }
+  to   { width: var(--pulsa-progress-width, 100%); }
+}
+@keyframes pulsa-typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes pulsa-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes pulsa-shakeX {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+@keyframes pulsa-ripple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Fond lumineux */
+@keyframes pulsa-glowPulse {
+  0%, 100% { box-shadow: 0 0 8px var(--pulsa-accent-glow); }
+  50%       { box-shadow: 0 0 20px var(--pulsa-accent-glow), 0 0 40px var(--pulsa-accent-soft); }
+}
+
+/* Compatibilité avec le dashboard existant */
+@keyframes fadeIn   { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse    { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes shimmer  { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes scaleIn  { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideIn  { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ============================================================
+   CLASSES D'ANIMATION (entrée unique)
+   ============================================================ */
+.pulsa-animate-fade-in       { animation: pulsa-fadeIn       0.4s ease-out forwards; }
+.pulsa-animate-fade-in-up    { animation: pulsa-fadeInUp     0.4s ease-out forwards; }
+.pulsa-animate-fade-in-down  { animation: pulsa-fadeInDown   0.3s ease-out forwards; }
+.pulsa-animate-slide-left    { animation: pulsa-slideInLeft  0.4s ease-out forwards; }
+.pulsa-animate-slide-right   { animation: pulsa-slideInRight 0.4s ease-out forwards; }
+.pulsa-animate-scale-in      { animation: pulsa-scaleIn      0.25s ease-out forwards; }
+.pulsa-animate-scale-bounce  { animation: pulsa-scaleInBounce 0.4s ease-out forwards; }
+.pulsa-animate-pop           { animation: pulsa-popIn        0.35s ease-out forwards; }
+.pulsa-animate-shake         { animation: pulsa-shakeX       0.4s ease-out; }
+
+/* Compatibilité */
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+/* Animations en boucle */
+.pulsa-animate-pulse       { animation: pulsa-pulse     2s ease-in-out infinite; }
+.pulsa-animate-bounce      { animation: pulsa-bounce    2s ease-in-out infinite; }
+.pulsa-animate-float       { animation: pulsa-float     3s ease-in-out infinite; }
+.pulsa-animate-spin        { animation: pulsa-spin      1s linear infinite; }
+.pulsa-animate-ping        { animation: pulsa-ping      1.5s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.pulsa-animate-glow        { animation: pulsa-glowPulse 2s ease-in-out infinite; }
+.pulsa-animate-blink       { animation: pulsa-blink     1.2s step-start infinite; }
+
+/* ============================================================
+   DÉLAIS (stagger)
+   ============================================================ */
+.pulsa-delay-50  { animation-delay: 50ms; }
+.pulsa-delay-100 { animation-delay: 100ms; }
+.pulsa-delay-150 { animation-delay: 150ms; }
+.pulsa-delay-200 { animation-delay: 200ms; }
+.pulsa-delay-300 { animation-delay: 300ms; }
+.pulsa-delay-400 { animation-delay: 400ms; }
+.pulsa-delay-500 { animation-delay: 500ms; }
+.pulsa-delay-600 { animation-delay: 600ms; }
+.pulsa-delay-700 { animation-delay: 700ms; }
+.pulsa-delay-800 { animation-delay: 800ms; }
+
+/* ============================================================
+   DURÉES
+   ============================================================ */
+.pulsa-duration-fast   { animation-duration: 150ms; }
+.pulsa-duration-normal { animation-duration: 300ms; }
+.pulsa-duration-slow   { animation-duration: 600ms; }
+.pulsa-duration-slower { animation-duration: 1000ms; }
+
+/* ============================================================
+   MICRO-INTERACTIONS HOVER
+   ============================================================ */
+.pulsa-hover-lift       { transition: var(--pulsa-transition); }
+.pulsa-hover-lift:hover { transform: translateY(-2px); box-shadow: var(--pulsa-shadow-md); }
+
+.pulsa-hover-scale:hover       { transform: scale(1.03); transition: var(--pulsa-transition); }
+.pulsa-hover-scale-sm:hover    { transform: scale(1.015); transition: var(--pulsa-transition); }
+.pulsa-hover-scale-btn:hover   { transform: scale(1.05); transition: var(--pulsa-transition); }
+
+.pulsa-hover-bright:hover      { filter: brightness(1.1); transition: var(--pulsa-transition); }
+.pulsa-hover-glow:hover        { box-shadow: 0 0 16px var(--pulsa-accent-glow); transition: var(--pulsa-transition); }
+.pulsa-hover-accent-border:hover { border-color: var(--pulsa-border-hover); transition: var(--pulsa-transition); }
+
+.pulsa-hover-arrow .pulsa-arrow { transition: transform var(--pulsa-transition); }
+.pulsa-hover-arrow:hover .pulsa-arrow { transform: translateX(4px); }
+
+/* ============================================================
+   TRANSITIONS (sur les éléments, pas d'animation)
+   ============================================================ */
+.pulsa-transition         { transition: var(--pulsa-transition); }
+.pulsa-transition-smooth  { transition: var(--pulsa-transition-smooth); }
+.pulsa-transition-none    { transition: none; }
+.pulsa-transition-all     { transition: all var(--pulsa-transition); }
+.pulsa-transition-opacity { transition: opacity var(--pulsa-transition); }
+.pulsa-transition-colors  { transition: color var(--pulsa-transition), background-color var(--pulsa-transition), border-color var(--pulsa-transition); }
+.pulsa-transition-transform { transition: transform var(--pulsa-transition); }
+
+/* ============================================================
+   RIPPLE EFFECT (sur les boutons)
+   Usage: ajouter .pulsa-ripple sur le parent, overflow: hidden requis
+   ============================================================ */
+.pulsa-ripple { position: relative; overflow: hidden; }
+.pulsa-ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, var(--pulsa-accent-soft) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.4s, opacity 0.4s;
+}
+.pulsa-ripple:active::after { transform: scale(2.5); opacity: 1; transition: 0s; }
+
+/* ============================================================
+   PREFERS REDUCED MOTION (accessibilité)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

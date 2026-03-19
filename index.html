@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark" data-accent="rose">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Pulsa CSS — Design System Ultra-Complet</title>
+  <meta name="description" content="Framework CSS dark-first avec 500+ composants, animations, thèmes dynamiques et zéro dépendance JS."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./pulsa.css"/>
+  <style>
+    /* ═══════ RESET / BASE OVERRIDES ═══════ */
+    *, *::before, *::after { box-sizing: border-box; transition: none; }
+    :root {
+      --ff-display: 'Syne', system-ui, sans-serif;
+      --ff-body: 'Inter', system-ui, sans-serif;
+      --ff-mono: 'JetBrains Mono', monospace;
+      --max: 1180px;
+      --nh: 64px;
+    }
+    body { font-family: var(--ff-body); overflow-x: hidden; background: var(--pulsa-bg-primary); color: var(--pulsa-text-primary); }
+
+    /* ═══════ NAVBAR ═══════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nh);
+      display: flex; align-items: center; gap: 2rem;
+      padding: 0 2rem;
+      background: rgba(10,10,13,.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--pulsa-border);
+      z-index: 900;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .625rem;
+      font-family: var(--ff-display); font-weight: 800; font-size: 1.25rem;
+      letter-spacing: -.04em; color: var(--pulsa-text-primary);
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--pulsa-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .875rem; color: white; font-weight: 900;
+    }
+    .nav-badge {
+      font-size: .6rem; font-weight: 800; padding: .1rem .45rem;
+      background: var(--pulsa-accent-soft); color: var(--pulsa-accent);
+      border-radius: 999px; letter-spacing: .04em;
+      border: 1px solid var(--pulsa-border-hover);
+    }
+    .nav-links { display: flex; gap: .25rem; margin-right: auto; }
+    .nav-link {
+      padding: .4rem .875rem; font-size: .85rem; font-weight: 500;
+      color: var(--pulsa-text-muted); text-decoration: none;
+      border-radius: 8px; transition: color .15s, background .15s;
+    }
+    .nav-link:hover { color: var(--pulsa-text-primary); background: var(--pulsa-bg-hover); }
+    .nav-link.active { color: var(--pulsa-accent); }
+    .nav-right { display: flex; align-items: center; gap: .625rem; }
+    .nav-accents { display: flex; gap: 5px; }
+    .nav-accent-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: transform .15s, border-color .15s;
+    }
+    .nav-accent-dot:hover, .nav-accent-dot.active { border-color: white; transform: scale(1.25); }
+    .nav-theme-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--pulsa-border);
+      background: var(--pulsa-bg-card);
+      color: var(--pulsa-text-secondary);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; transition: border-color .15s, color .15s;
+    }
+    .nav-theme-btn:hover { border-color: var(--pulsa-border-hover); color: var(--pulsa-accent); }
+    .nav-cta {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .5rem 1.125rem; font-size: .85rem; font-weight: 600;
+      background: var(--pulsa-accent); color: white;
+      border-radius: 999px; border: none; cursor: pointer;
+      text-decoration: none; transition: background .15s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--pulsa-accent-hover); transform: translateY(-1px); color: white; }
+    .nav-burger {
+      display: none; width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--pulsa-border); background: var(--pulsa-bg-card);
+      color: var(--pulsa-text-primary); cursor: pointer;
+      align-items: center; justify-content: center; font-size: 1rem;
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-accents, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
+    }
+
+    /* ═══════ HERO ═══════ */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--nh) + 3rem) 2rem 5rem;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, var(--pulsa-accent-glow), transparent 55%),
+        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(139,92,246,.12), transparent),
+        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(59,130,246,.08), transparent);
+      animation: heroBgShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes heroBgShift { from { opacity: .7; } to { opacity: 1; transform: scale(1.04); } }
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(var(--pulsa-border) 1px, transparent 1px),
+                        linear-gradient(to right, var(--pulsa-border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 70%);
+      opacity: .35;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .625rem;
+      padding: .375rem .875rem; border-radius: 999px;
+      border: 1px solid var(--pulsa-border);
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(8px);
+      font-size: .8rem; font-weight: 600; color: var(--pulsa-text-muted);
+      margin-bottom: 1.75rem;
+      animation: pulsa-fadeInDown .5s ease both;
+    }
+    .hero-eyebrow span { color: var(--pulsa-accent); }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.75rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -.04em;
+      margin-bottom: 1.5rem;
+      animation: pulsa-fadeInUp .5s .1s ease both;
+    }
+    .hero-title-line { display: block; }
+    .hero-title-accent {
+      background: linear-gradient(135deg, var(--pulsa-accent), var(--pulsa-accent-hover));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.125rem; color: var(--pulsa-text-muted); line-height: 1.7;
+      max-width: 560px; margin: 0 auto 2.5rem;
+      animation: pulsa-fadeInUp .5s .2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: pulsa-fadeInUp .5s .3s ease both;
+    }
+    .hero-btn-primary {
+      display: inline-flex; align-items: center; gap: .625rem;
+      padding: .875rem 2rem; font-size: 1rem; font-weight: 700;
+      background: var(--pulsa-accent); color: white;
+      border-radius: 999px; border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 4px 24px var(--pulsa-accent-glow);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .hero-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--pulsa-accent-glow); background: var(--pulsa-accent-hover); color: white; }
+    .hero-btn-ghost {
+      display: inline-flex; align-items: center; gap: .625rem;
+      padding: .875rem 1.75rem; font-size: 1rem; font-weight: 600;
+      background: transparent; color: var(--pulsa-text-secondary);
+      border-radius: 999px; border: 1px solid var(--pulsa-border); cursor: pointer; text-decoration: none;
+      transition: border-color .15s, color .15s;
+    }
+    .hero-btn-ghost:hover { border-color: var(--pulsa-border-hover); color: var(--pulsa-text-primary); }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+      margin-top: 4rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--pulsa-border);
+      animation: pulsa-fadeInUp .5s .5s ease both;
+    }
+    .hero-stat-val {
+      font-family: var(--ff-display); font-size: 2.25rem; font-weight: 800;
+      color: var(--pulsa-text-primary); line-height: 1;
+    }
+    .hero-stat-label { font-size: .8rem; color: var(--pulsa-text-muted); margin-top: .25rem; }
+
+    /* ═══════ MARQUEE LOGOS / TAGS ═══════ */
+    .marquee-wrap { padding: 2.5rem 0; background: var(--pulsa-bg-secondary); border-top: 1px solid var(--pulsa-border); border-bottom: 1px solid var(--pulsa-border); overflow: hidden; position: relative; }
+    .marquee-wrap::before, .marquee-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; }
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--pulsa-bg-secondary), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--pulsa-bg-secondary), transparent); }
+    .marquee-track { display: flex; gap: 1rem; animation: pulsa-ticker 30s linear infinite; width: max-content; }
+    .marquee-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .375rem 1rem; border-radius: 999px;
+      border: 1px solid var(--pulsa-border);
+      background: var(--pulsa-bg-card);
+      font-size: .8rem; font-weight: 600; color: var(--pulsa-text-secondary);
+      white-space: nowrap;
+    }
+    .marquee-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pulsa-accent); }
+
+    /* ═══════ SECTIONS ═══════ */
+    .section { padding: 6rem 2rem; max-width: var(--max); margin: 0 auto; }
+    .section-sm { padding: 4rem 2rem; max-width: var(--max); margin: 0 auto; }
+    .section-full { padding: 5rem 0; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--pulsa-accent); margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--pulsa-accent); border-radius: 1px; }
+    .section-title {
+      font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+      margin-bottom: .875rem;
+    }
+    .section-desc { font-size: 1.0625rem; color: var(--pulsa-text-muted); max-width: 520px; line-height: 1.7; }
+
+    /* ═══════ FEATURES BENTO ═══════ */
+    .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.125rem; margin-top: 3.5rem; }
+    .bento-card {
+      background: var(--pulsa-bg-card); border: 1px solid var(--pulsa-border);
+      border-radius: 20px; padding: 2rem; position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      cursor: default;
+    }
+    .bento-card:hover { border-color: var(--pulsa-border-hover); transform: translateY(-2px); box-shadow: var(--pulsa-shadow-md); }
+    .bento-card.span2 { grid-column: span 2; }
+    .bento-card.dark { background: var(--pulsa-bg-elevated); }
+    .bento-card-glow::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, var(--pulsa-accent-soft), transparent 60%); pointer-events: none; }
+    .bento-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.375rem; margin-bottom: 1.25rem; border: 1px solid var(--pulsa-border); background: var(--pulsa-bg-elevated); }
+    .bento-title { font-family: var(--ff-display); font-size: 1.125rem; font-weight: 700; margin-bottom: .375rem; }
+    .bento-desc { font-size: .875rem; color: var(--pulsa-text-muted); line-height: 1.6; }
+    .bento-big-num { font-family: var(--ff-display); font-size: 4.5rem; font-weight: 900; line-height: 1; color: var(--pulsa-text-primary); letter-spacing: -.04em; }
+    .bento-big-label { font-size: .875rem; color: var(--pulsa-text-muted); margin-top: .5rem; }
+
+    /* ═══════ COMPONENT SHOWCASE ═══════ */
+    .showcase-tabs { display: flex; gap: .375rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .showcase-tab {
+      padding: .5rem 1.125rem; border-radius: 999px;
+      border: 1px solid var(--pulsa-border); background: transparent;
+      font-size: .85rem; font-weight: 600; color: var(--pulsa-text-muted);
+      cursor: pointer; transition: all .15s;
+    }
+    .showcase-tab:hover { border-color: var(--pulsa-border-hover); color: var(--pulsa-text-primary); }
+    .showcase-tab.active { background: var(--pulsa-accent-soft); border-color: var(--pulsa-border-hover); color: var(--pulsa-accent); }
+    .showcase-panel { display: none; }
+    .showcase-panel.active { display: block; }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .demo-card {
+      background: var(--pulsa-bg-card); border: 1px solid var(--pulsa-border); border-radius: 16px;
+      overflow: hidden; transition: border-color .2s;
+    }
+    .demo-card:hover { border-color: var(--pulsa-border-hover); }
+    .demo-preview {
+      padding: 1.75rem; display: flex; align-items: center; justify-content: center;
+      background: var(--pulsa-bg-secondary); min-height: 120px; flex-wrap: wrap; gap: .625rem;
+    }
+    .demo-label { padding: .75rem 1rem; border-top: 1px solid var(--pulsa-border); font-size: .78rem; font-weight: 600; color: var(--pulsa-text-muted); display: flex; justify-content: space-between; align-items: center; }
+    .demo-copy-btn { font-size: .7rem; color: var(--pulsa-accent); cursor: pointer; border: none; background: none; font-weight: 600; padding: 0; }
+
+    /* ═══════ ANIMATIONS SHOWCASE ═══════ */
+    .anim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .75rem; margin-top: 2.5rem; }
+    .anim-card {
+      background: var(--pulsa-bg-card); border: 1px solid var(--pulsa-border); border-radius: 14px;
+      padding: 1.5rem 1rem; display: flex; flex-direction: column; align-items: center; gap: .875rem;
+      cursor: pointer; transition: border-color .15s; user-select: none;
+    }
+    .anim-card:hover { border-color: var(--pulsa-border-hover); }
+    .anim-box {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--pulsa-accent-soft); border: 2px solid var(--pulsa-accent);
+      color: var(--pulsa-accent); display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+    }
+    .anim-name { font-size: .75rem; font-weight: 700; color: var(--pulsa-text-muted); text-align: center; }
+
+    /* ═══════ THEME DEMO ═══════ */
+    .theme-demo {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      background: var(--pulsa-bg-secondary); border: 1px solid var(--pulsa-border);
+      border-radius: 24px; padding: 2rem; margin-top: 3rem; align-items: start;
+    }
+    .theme-panel { border-radius: 16px; padding: 1.5rem; }
+    .theme-panel-dark  { background: #0a0a0d; border: 1px solid rgba(255,255,255,.07); }
+    .theme-panel-light { background: #f8fafc; border: 1px solid rgba(0,0,0,.08); }
+
+    /* ═══════ CODE INSTALL ═══════ */
+    .install-card {
+      background: var(--pulsa-bg-secondary); border: 1px solid var(--pulsa-border);
+      border-radius: 20px; overflow: hidden; margin-top: 2.5rem;
+    }
+    .install-tabs { display: flex; border-bottom: 1px solid var(--pulsa-border); }
+    .install-tab {
+      padding: .875rem 1.5rem; font-size: .85rem; font-weight: 600;
+      color: var(--pulsa-text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s; border-top: none; border-left: none; border-right: none;
+      background: transparent;
+    }
+    .install-tab.active { color: var(--pulsa-accent); border-bottom-color: var(--pulsa-accent); }
+    .install-body { padding: 1.5rem; font-family: var(--ff-mono); font-size: .9rem; line-height: 1.75; overflow-x: auto; }
+    .install-panel { display: none; }
+    .install-panel.active { display: block; }
+    .c-prompt { color: var(--pulsa-text-muted); user-select: none; }
+    .c-cmd { color: var(--pulsa-text-primary); }
+    .c-str { color: #86efac; }
+    .c-key { color: var(--pulsa-accent); }
+    .c-cmt { color: var(--pulsa-text-muted); font-style: italic; }
+    .install-copy {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--pulsa-border); padding: .75rem 1.5rem;
+    }
+    .install-file { font-size: .78rem; color: var(--pulsa-text-muted); font-family: var(--ff-mono); }
+    .install-copy-btn {
+      font-size: .78rem; font-weight: 700; color: var(--pulsa-accent);
+      cursor: pointer; border: 1px solid var(--pulsa-border-hover);
+      background: var(--pulsa-accent-soft); border-radius: 6px;
+      padding: .25rem .75rem; transition: background .15s;
+    }
+    .install-copy-btn:hover { background: var(--pulsa-accent); color: white; }
+
+    /* ═══════ COMPONENT FULL SECTION ═══════ */
+    .comp-section { border-top: 1px solid var(--pulsa-border); }
+    .comp-section-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 2rem; max-width: var(--max); margin: 0 auto;
+    }
+    .comp-section-title { font-family: var(--ff-display); font-size: 1.5rem; font-weight: 800; }
+    .comp-section-count { font-size: .7rem; font-weight: 700; padding: .15rem .5rem; border-radius: 999px; background: var(--pulsa-accent-soft); color: var(--pulsa-accent); }
+    .comp-body { padding: 0 2rem 3rem; max-width: var(--max); margin: 0 auto; }
+
+    /* ═══════ FOOTER ═══════ */
+    .footer-main {
+      border-top: 1px solid var(--pulsa-border);
+      padding: 4rem 2rem 2rem; max-width: var(--max); margin: 0 auto;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand-name { font-family: var(--ff-display); font-size: 1.375rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: .75rem; }
+    .footer-desc { font-size: .875rem; color: var(--pulsa-text-muted); line-height: 1.65; max-width: 280px; }
+    .footer-col-title { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--pulsa-text-muted); margin-bottom: 1rem; }
+    .footer-link { display: block; font-size: .875rem; color: var(--pulsa-text-muted); text-decoration: none; padding: .25rem 0; transition: color .15s; }
+    .footer-link:hover { color: var(--pulsa-accent); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--pulsa-border); font-size: .8rem; color: var(--pulsa-text-muted); flex-wrap: wrap; gap: .75rem; }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } .footer-grid > :first-child { grid-column: span 2; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } .footer-grid > :first-child { grid-column: span 1; } .bento { grid-template-columns: 1fr; } .bento-card.span2 { grid-column: span 1; } .theme-demo { grid-template-columns: 1fr; } }
+
+    /* ═══════ CARD HOVER LIFT ═══════ */
+    .hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: var(--pulsa-shadow-lg); }
+
+    /* ═══════ STICKY SECTION TITLE ═══════ */
+    .sticky-head { position: sticky; top: var(--nh); z-index: 10; background: rgba(10,10,13,.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--pulsa-border); }
+
+    /* ═══════ SCROLLBAR ═══════ */
+    * { scrollbar-width: thin; scrollbar-color: var(--pulsa-border) transparent; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--pulsa-border); border-radius: 3px; }
+
+    /* ═══════ PULSE PING ═══════ */
+    .ping-wrap { position: relative; display: inline-flex; }
+    .ping-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pulsa-success); }
+    .ping-ring { position: absolute; inset: -2px; border-radius: 50%; background: var(--pulsa-success); animation: pulsa-ping 1.5s ease infinite; }
+
+    /* Live component preview backgrounds */
+    .preview-checker {
+      background-image: linear-gradient(45deg, rgba(255,255,255,.02) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,.02) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,.02) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.02) 75%);
+      background-size: 14px 14px;
+      background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ NAVBAR ══════════════════════════════ -->
+<nav class="nav">
+  <a href="./" class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    Pulsa
+    <span class="nav-badge">v2.2</span>
+  </a>
+  <div class="nav-links">
+    <a href="#components" class="nav-link">Composants</a>
+    <a href="#animations" class="nav-link">Animations</a>
+    <a href="#themes" class="nav-link">Thèmes</a>
+    <a href="#install" class="nav-link">Installation</a>
+    <a href="./docs.html" class="nav-link">Documentation</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-accents" id="accentPicker">
+      <div class="nav-accent-dot active" data-accent="rose"   style="background:#f43f5e"></div>
+      <div class="nav-accent-dot" data-accent="purple" style="background:#8b5cf6"></div>
+      <div class="nav-accent-dot" data-accent="blue"   style="background:#3b82f6"></div>
+      <div class="nav-accent-dot" data-accent="green"  style="background:#22c55e"></div>
+      <div class="nav-accent-dot" data-accent="orange" style="background:#f97316"></div>
+      <div class="nav-accent-dot" data-accent="pink"   style="background:#ec4899"></div>
+    </div>
+    <button class="nav-theme-btn" id="themeToggle" title="Changer de thème">🌙</button>
+    <a href="#install" class="nav-cta">Get Started →</a>
+  </div>
+  <button class="nav-burger" id="navBurger">☰</button>
+</nav>
+
+<!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="ping-wrap"><div class="ping-ring"></div><div class="ping-dot"></div></div>
+      <span>v2.2.0 vient de sortir —</span>
+      <span>500+ composants</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="hero-title-line">Le framework CSS</span>
+      <span class="hero-title-line hero-title-accent">pour tout construire.</span>
+    </h1>
+    <p class="hero-desc">
+      Dark-first, zéro JS requis, entièrement personnalisable via tokens CSS.
+      Thèmes dynamiques, 40+ animations, composants pour apps, landing pages et dashboards.
+    </p>
+    <div class="hero-actions">
+      <a href="#install" class="hero-btn-primary">
+        <span>⚡</span> Installer maintenant
+      </a>
+      <a href="./docs.html" class="hero-btn-ghost">
+        <span>📖</span> Documentation
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val pulsa-animate-fadeInUp pulsa-delay-100" style="font-family:var(--ff-display)">500+</div>
+        <div class="hero-stat-label">Composants</div>
+      </div>
+      <div>
+        <div class="hero-stat-val pulsa-animate-fadeInUp pulsa-delay-200" style="font-family:var(--ff-display)">40+</div>
+        <div class="hero-stat-label">Animations</div>
+      </div>
+      <div>
+        <div class="hero-stat-val pulsa-animate-fadeInUp pulsa-delay-300" style="font-family:var(--ff-display)">6</div>
+        <div class="hero-stat-label">Thèmes accent</div>
+      </div>
+      <div>
+        <div class="hero-stat-val pulsa-animate-fadeInUp pulsa-delay-400" style="font-family:var(--ff-display)">0</div>
+        <div class="hero-stat-label">Dépendances JS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ MARQUEE ══════════════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Buttons</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Cards</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Modals</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Navbar</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Timeline</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Kanban</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Chat</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Forms</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Tables</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Pricing</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Badges</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Alerts</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Skeleton</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Tabs</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Accordion</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Tooltips</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>FAB</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Command Palette</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Dark Mode</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Glassmorphism</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Neon Glow</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Gradient Borders</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Animations</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Grid System</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Utilities</span>
+    <!-- duplicate for infinite scroll -->
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Buttons</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Cards</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Modals</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Navbar</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Timeline</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Kanban</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Chat</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Pricing</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>FAB</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Command Palette</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Glassmorphism</span>
+    <span class="marquee-tag"><span class="marquee-tag-dot"></span>Gradient Borders</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ FEATURES BENTO ══════════════════════════════ -->
+<section class="section">
+  <div class="section-label">Pourquoi Pulsa</div>
+  <h2 class="section-title">Tout ce dont tu as<br>besoin, déjà là.</h2>
+  <p class="section-desc">Un seul import, des centaines de composants prêts à l'emploi. Plus de casse-tête.</p>
+
+  <div class="bento">
+    <div class="bento-card bento-card-glow hover-lift">
+      <div class="bento-icon">🎨</div>
+      <div class="bento-title">Thèmes dynamiques</div>
+      <div class="bento-desc">Dark/light auto via <code style="font-family:var(--ff-mono);font-size:.8em;color:var(--pulsa-accent)">prefers-color-scheme</code>, 6 couleurs d'accent, tokens CSS surchargeables à la volée.</div>
+    </div>
+    <div class="bento-card hover-lift">
+      <div class="bento-icon">⚡</div>
+      <div class="bento-title">Zéro dépendance JS</div>
+      <div class="bento-desc">100% CSS pur. Fonctionne avec React, Vue, Svelte, HTML vanilla — ou n'importe quoi d'autre.</div>
+    </div>
+    <div class="bento-card hover-lift" style="background:var(--pulsa-accent-soft);border-color:var(--pulsa-border-hover)">
+      <div style="font-family:var(--ff-display);font-size:4.5rem;font-weight:900;line-height:1;letter-spacing:-.04em;color:var(--pulsa-accent)">500+</div>
+      <div class="bento-desc" style="margin-top:.5rem">composants, variantes et utilitaires prêts à l'emploi.</div>
+    </div>
+    <div class="bento-card span2 hover-lift dark">
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.25rem">
+        <button class="pulsa-btn-primary pulsa-btn-sm">Primary</button>
+        <button class="pulsa-btn-outline pulsa-btn-sm">Outline</button>
+        <button class="pulsa-btn-ghost pulsa-btn-sm">Ghost</button>
+        <span class="pulsa-badge pulsa-badge-accent">New</span>
+        <span class="pulsa-badge pulsa-badge-success">Done</span>
+        <span class="pulsa-badge pulsa-badge-danger">Error</span>
+        <div style="display:flex;gap:.375rem">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--pulsa-accent-soft);border:2px solid var(--pulsa-bg-primary);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--pulsa-accent)">JD</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--pulsa-bg-primary);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#22c55e;margin-left:-10px">AM</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(59,130,246,.15);border:2px solid var(--pulsa-bg-primary);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#3b82f6;margin-left:-10px">+4</div>
+        </div>
+      </div>
+      <div class="bento-title">Composants interactifs</div>
+      <div class="bento-desc">Buttons, badges, avatars, cards, modals, tooltips… chaque variante est pensée pour s'intégrer parfaitement.</div>
+    </div>
+    <div class="bento-card hover-lift">
+      <div class="bento-icon">📦</div>
+      <div class="bento-title">Modulaire par design</div>
+      <div class="bento-desc">Importe uniquement ce dont tu as besoin. Tokens, base, composants, animations — chacun dans son fichier.</div>
+    </div>
+    <div class="bento-card hover-lift">
+      <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
+        <div style="height:4px;flex:3;border-radius:2px;background:var(--pulsa-accent)"></div>
+        <div style="height:4px;flex:1;border-radius:2px;background:var(--pulsa-bg-elevated)"></div>
+        <div style="height:28px;border-radius:6px;background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);padding:0 .625rem;display:flex;align-items:center;font-size:.7rem;color:var(--pulsa-text-muted);width:100%">Loading... 73%</div>
+      </div>
+      <div class="bento-title">Feedback & états</div>
+      <div class="bento-desc">Progress bars, spinners, skeletons, toasts, alerts et tous les états visuels dont une app a besoin.</div>
+    </div>
+    <div class="bento-card hover-lift">
+      <div class="bento-icon">🎞️</div>
+      <div class="bento-title">40+ Animations CSS</div>
+      <div class="bento-desc">fadeIn, bounce, wiggle, heartbeat, morphBlob, typewriter, glitch… et des utilities de délai/durée.</div>
+    </div>
+    <div class="bento-card hover-lift">
+      <div class="bento-icon">♿</div>
+      <div class="bento-title">Accessibilité</div>
+      <div class="bento-desc">Focus rings, skip to content, <code style="font-family:var(--ff-mono);font-size:.8em;color:var(--pulsa-accent)">prefers-reduced-motion</code>, high-contrast support. A11y pensé dès la base.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ COMPONENT SHOWCASE ══════════════════════════════ -->
+<section id="components" style="background:var(--pulsa-bg-secondary);border-top:1px solid var(--pulsa-border);border-bottom:1px solid var(--pulsa-border);padding:5rem 0">
+  <div style="max-width:var(--max);margin:0 auto;padding:0 2rem">
+    <div class="section-label">Composants</div>
+    <h2 class="section-title">Prévisualisés,<br>prêts à copier.</h2>
+
+    <div class="showcase-tabs" style="margin-top:2rem">
+      <button class="showcase-tab active" data-tab="buttons">Boutons</button>
+      <button class="showcase-tab" data-tab="cards">Cards</button>
+      <button class="showcase-tab" data-tab="forms">Formulaires</button>
+      <button class="showcase-tab" data-tab="feedback">Feedback</button>
+      <button class="showcase-tab" data-tab="nav">Navigation</button>
+      <button class="showcase-tab" data-tab="data">Données</button>
+      <button class="showcase-tab" data-tab="overlay">Overlays</button>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="showcase-panel active" id="tab-buttons">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:.75rem;flex-direction:column">
+            <div style="display:flex;gap:.625rem;flex-wrap:wrap;justify-content:center">
+              <button class="pulsa-btn-primary">Primary</button>
+              <button class="pulsa-btn-secondary">Secondary</button>
+              <button class="pulsa-btn-ghost">Ghost</button>
+            </div>
+          </div>
+          <div class="demo-label">Boutons principaux <span class="demo-copy-btn" data-copy='&lt;button class="pulsa-btn-primary"&gt;...&lt;/button&gt;'>Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:.5rem;flex-direction:column">
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+              <button class="pulsa-btn-primary pulsa-btn-sm">Small</button>
+              <button class="pulsa-btn-primary">Medium</button>
+              <button class="pulsa-btn-primary pulsa-btn-lg">Large</button>
+            </div>
+          </div>
+          <div class="demo-label">Tailles <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+              <button class="pulsa-btn-outline">Outline</button>
+              <button class="pulsa-btn-link">Link</button>
+              <button class="pulsa-btn-loading" disabled>Chargement</button>
+            </div>
+          </div>
+          <div class="demo-label">Variantes spéciales <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+              <button class="pulsa-btn-success pulsa-btn-sm">✓ Success</button>
+              <button class="pulsa-btn-danger pulsa-btn-sm">✕ Danger</button>
+              <button class="pulsa-btn-primary pulsa-btn-sm" disabled>Disabled</button>
+            </div>
+          </div>
+          <div class="demo-label">États & couleurs <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker">
+            <div class="pulsa-btn-group">
+              <button class="pulsa-btn-primary">Gauche</button>
+              <button class="pulsa-btn-primary">Centre</button>
+              <button class="pulsa-btn-primary">Droite</button>
+            </div>
+          </div>
+          <div class="demo-label">Button Group <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker">
+            <div style="display:flex;gap:.75rem;align-items:center">
+              <span class="pulsa-badge pulsa-badge-accent">Accent</span>
+              <span class="pulsa-badge pulsa-badge-success">Success</span>
+              <span class="pulsa-badge pulsa-badge-danger">Danger</span>
+              <span class="pulsa-badge pulsa-badge-warning">Warning</span>
+            </div>
+          </div>
+          <div class="demo-label">Badges <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="showcase-panel" id="tab-cards">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div class="pulsa-card" style="width:100%">
+              <div class="pulsa-card-header"><span class="pulsa-card-title">Titre de la card</span></div>
+              <div class="pulsa-card-body">Contenu de la card avec du texte descriptif.</div>
+            </div>
+          </div>
+          <div class="demo-label">Card basique <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker">
+            <div class="pulsa-glass" style="padding:1.25rem;border-radius:14px;width:100%;max-width:220px">
+              <div style="font-weight:700;margin-bottom:.375rem">Glass Card</div>
+              <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Effet glassmorphism pur CSS.</div>
+            </div>
+          </div>
+          <div class="demo-label">Glassmorphism <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div class="pulsa-border-gradient" style="padding:1.25rem;width:100%;max-width:220px">
+              <div style="font-weight:700;margin-bottom:.375rem">Gradient Border</div>
+              <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Bordure dégradée CSS pure.</div>
+            </div>
+          </div>
+          <div class="demo-label">Gradient Border <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div style="position:relative;overflow:hidden;background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:14px;padding:1.25rem;width:100%">
+              <div style="position:absolute;top:0;right:1.5rem;background:var(--pulsa-accent);color:white;font-size:.6rem;font-weight:800;padding:.35rem .875rem;border-radius:0 0 8px 8px;letter-spacing:.05em;text-transform:uppercase">HOT</div>
+              <div style="font-weight:700;margin-bottom:.25rem">Card avec Ribbon</div>
+              <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Badge de coin CSS.</div>
+            </div>
+          </div>
+          <div class="demo-label">Ribbon Card <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:1rem;padding:1rem">
+            <div style="background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:12px;padding:1rem;width:100%;display:flex;gap:.75rem">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--pulsa-accent-soft);color:var(--pulsa-accent);display:flex;align-items:center;justify-content:center;font-size:.875rem;flex-shrink:0">JS</div>
+              <div>
+                <div style="font-size:.85rem;font-weight:600">Jean Doe</div>
+                <div style="font-size:.75rem;color:var(--pulsa-text-muted)">Développeur • En ligne</div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Profile Card <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div style="background:linear-gradient(135deg,var(--pulsa-accent-soft),var(--pulsa-bg-elevated));border:1px solid var(--pulsa-border);border-radius:14px;padding:1.25rem;width:100%;max-width:220px">
+              <div style="font-size:1.5rem;font-weight:900;letter-spacing:-.04em;font-family:var(--ff-display)">1,284</div>
+              <div style="font-size:.8rem;color:var(--pulsa-text-muted);margin-top:.25rem">Utilisateurs actifs</div>
+              <div style="font-size:.8rem;color:var(--pulsa-success);margin-top:.5rem;font-weight:700">↑ +12.4%</div>
+            </div>
+          </div>
+          <div class="demo-label">Metric Card <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="showcase-panel" id="tab-forms">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.75rem;padding:1.25rem">
+            <div class="pulsa-form-group" style="width:100%">
+              <label class="pulsa-label">Email</label>
+              <input type="email" class="pulsa-input" placeholder="tu@exemple.fr"/>
+            </div>
+          </div>
+          <div class="demo-label">Input basique <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.75rem;padding:1.25rem">
+            <div class="pulsa-form-group" style="width:100%">
+              <label class="pulsa-label">Choisir une option</label>
+              <select class="pulsa-select">
+                <option>Option A</option>
+                <option>Option B</option>
+              </select>
+            </div>
+          </div>
+          <div class="demo-label">Select <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:.75rem;flex-wrap:wrap;justify-content:center">
+            <label class="pulsa-toggle"><input type="checkbox" checked/><span class="pulsa-toggle-track"><span class="pulsa-toggle-thumb"></span></span><span>Activer</span></label>
+            <label class="pulsa-toggle"><input type="checkbox"/><span class="pulsa-toggle-track"><span class="pulsa-toggle-thumb"></span></span><span>Désactiver</span></label>
+          </div>
+          <div class="demo-label">Toggle Switch <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.5rem;padding:1.25rem">
+            <div style="display:flex;flex-direction:column;gap:.5rem;width:100%">
+              <label class="pulsa-radio"><input type="radio" name="r1" checked/><span class="pulsa-radio-mark"></span>Option 1</label>
+              <label class="pulsa-radio"><input type="radio" name="r1"/><span class="pulsa-radio-mark"></span>Option 2</label>
+            </div>
+          </div>
+          <div class="demo-label">Radio buttons <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.5rem;padding:1.25rem">
+            <div class="pulsa-chip-input-wrap" style="width:100%">
+              <span class="pulsa-chip pulsa-chip-accent">CSS<button class="pulsa-chip-remove">×</button></span>
+              <span class="pulsa-chip pulsa-chip-accent">Design<button class="pulsa-chip-remove">×</button></span>
+              <input class="pulsa-chip-input" placeholder="Ajouter..."/>
+            </div>
+          </div>
+          <div class="demo-label">Chip Input <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.75rem;padding:1.25rem">
+            <div class="pulsa-input-group" style="width:100%">
+              <span class="pulsa-input-addon">🔍</span>
+              <input type="text" class="pulsa-input" placeholder="Rechercher..."/>
+            </div>
+          </div>
+          <div class="demo-label">Input avec addon <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="showcase-panel" id="tab-feedback">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.75rem;padding:1.25rem;align-items:stretch">
+            <div class="pulsa-progress-bar"><div class="pulsa-progress-bar-fill" style="width:72%"></div></div>
+            <div class="pulsa-progress-bar"><div class="pulsa-progress-bar-fill" style="width:45%;background:var(--pulsa-success)"></div></div>
+            <div class="pulsa-progress-bar"><div class="pulsa-progress-bar-fill" style="width:88%;background:var(--pulsa-warning)"></div></div>
+          </div>
+          <div class="demo-label">Progress Bar <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:.75rem">
+            <div class="pulsa-spinner"></div>
+            <div class="pulsa-spinner-dual"></div>
+            <div class="pulsa-spinner-dots"><span></span><span></span><span></span></div>
+            <div class="pulsa-spinner-bars"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="demo-label">Spinners <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.75rem;padding:1rem;align-items:stretch">
+            <div style="height:16px;width:60%;border-radius:8px;background:linear-gradient(90deg,var(--pulsa-bg-elevated) 25%,var(--pulsa-border) 50%,var(--pulsa-bg-elevated) 75%);background-size:200% 100%;animation:pulsa-shimmer 1.5s infinite"></div>
+            <div style="height:12px;width:80%;border-radius:6px;background:linear-gradient(90deg,var(--pulsa-bg-elevated) 25%,var(--pulsa-border) 50%,var(--pulsa-bg-elevated) 75%);background-size:200% 100%;animation:pulsa-shimmer 1.5s infinite"></div>
+            <div style="height:12px;width:45%;border-radius:6px;background:linear-gradient(90deg,var(--pulsa-bg-elevated) 25%,var(--pulsa-border) 50%,var(--pulsa-bg-elevated) 75%);background-size:200% 100%;animation:pulsa-shimmer 1.5s infinite"></div>
+          </div>
+          <div class="demo-label">Skeleton Loader <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.5rem;padding:1rem;align-items:stretch">
+            <div class="pulsa-alert pulsa-alert-success" style="font-size:.8rem;padding:.625rem .875rem">✓ Succès — Enregistré.</div>
+            <div class="pulsa-alert pulsa-alert-danger"  style="font-size:.8rem;padding:.625rem .875rem">✕ Erreur — Réessaie.</div>
+            <div class="pulsa-alert pulsa-alert-warning" style="font-size:.8rem;padding:.625rem .875rem">⚠ Attention — Vérifie.</div>
+          </div>
+          <div class="demo-label">Alerts <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div style="background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:12px;padding:.875rem 1rem;max-width:240px;box-shadow:var(--pulsa-shadow-md)">
+              <div style="display:flex;gap:.75rem;align-items:flex-start">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--pulsa-success-soft);color:var(--pulsa-success);display:flex;align-items:center;justify-content:center;font-size:.875rem;flex-shrink:0">✓</div>
+                <div><div style="font-size:.85rem;font-weight:600">Enregistré !</div><div style="font-size:.75rem;color:var(--pulsa-text-muted)">Tes modifications sont sauvegardées.</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Toast notification <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="gap:.75rem">
+            <div class="pulsa-status"><div class="pulsa-status-dot pulsa-status-online"></div>En ligne</div>
+            <div class="pulsa-status"><div class="pulsa-status-dot pulsa-status-away"></div>Absent</div>
+            <div class="pulsa-status"><div class="pulsa-status-dot pulsa-status-busy"></div>Occupé</div>
+          </div>
+          <div class="demo-label">Status Indicators <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="showcase-panel" id="tab-nav">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1rem">
+            <nav style="display:flex;gap:.25rem;width:100%">
+              <button style="padding:.375rem .75rem;border-radius:8px;background:var(--pulsa-accent-soft);border:none;color:var(--pulsa-accent);font-size:.8rem;font-weight:600;cursor:pointer">Accueil</button>
+              <button style="padding:.375rem .75rem;border-radius:8px;background:transparent;border:none;color:var(--pulsa-text-muted);font-size:.8rem;font-weight:500;cursor:pointer">À propos</button>
+              <button style="padding:.375rem .75rem;border-radius:8px;background:transparent;border:none;color:var(--pulsa-text-muted);font-size:.8rem;font-weight:500;cursor:pointer">Contact</button>
+            </nav>
+          </div>
+          <div class="demo-label">Navbar horizontale <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1rem">
+            <div style="display:flex;flex-direction:column;gap:2px;width:100%">
+              <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;border-radius:8px;background:var(--pulsa-accent-soft);color:var(--pulsa-accent);font-size:.82rem;font-weight:600;text-decoration:none;border-left:2px solid var(--pulsa-accent)">📊 Dashboard</a>
+              <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;border-radius:8px;color:var(--pulsa-text-muted);font-size:.82rem;text-decoration:none">👥 Utilisateurs</a>
+              <a href="#" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;border-radius:8px;color:var(--pulsa-text-muted);font-size:.82rem;text-decoration:none">⚙️ Paramètres</a>
+            </div>
+          </div>
+          <div class="demo-label">Sidebar <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1.25rem">
+            <div style="display:flex;gap:.25rem;border-bottom:1px solid var(--pulsa-border);width:100%">
+              <button style="padding:.5rem 1rem;border:none;background:none;color:var(--pulsa-accent);font-size:.85rem;font-weight:600;border-bottom:2px solid var(--pulsa-accent);margin-bottom:-1px;cursor:pointer">Onglet 1</button>
+              <button style="padding:.5rem 1rem;border:none;background:none;color:var(--pulsa-text-muted);font-size:.85rem;cursor:pointer">Onglet 2</button>
+              <button style="padding:.5rem 1rem;border:none;background:none;color:var(--pulsa-text-muted);font-size:.85rem;cursor:pointer">Onglet 3</button>
+            </div>
+          </div>
+          <div class="demo-label">Tabs <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem;align-items:flex-start">
+            <ol class="pulsa-breadcrumb pulsa-breadcrumb-chevron">
+              <li class="pulsa-breadcrumb-item"><a href="#">Accueil</a></li>
+              <li class="pulsa-breadcrumb-item"><a href="#">Blog</a></li>
+              <li class="pulsa-breadcrumb-item active"><span>Article</span></li>
+            </ol>
+          </div>
+          <div class="demo-label">Breadcrumb <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview">
+            <div class="pulsa-pagination" style="display:flex;gap:.25rem">
+              <button style="width:32px;height:32px;border-radius:8px;border:1px solid var(--pulsa-border);background:transparent;color:var(--pulsa-text-muted);cursor:pointer;font-size:.85rem">‹</button>
+              <button style="width:32px;height:32px;border-radius:8px;border:none;background:var(--pulsa-accent);color:white;cursor:pointer;font-size:.85rem;font-weight:600">1</button>
+              <button style="width:32px;height:32px;border-radius:8px;border:1px solid var(--pulsa-border);background:transparent;color:var(--pulsa-text-secondary);cursor:pointer;font-size:.85rem">2</button>
+              <button style="width:32px;height:32px;border-radius:8px;border:1px solid var(--pulsa-border);background:transparent;color:var(--pulsa-text-secondary);cursor:pointer;font-size:.85rem">3</button>
+              <button style="width:32px;height:32px;border-radius:8px;border:1px solid var(--pulsa-border);background:transparent;color:var(--pulsa-text-muted);cursor:pointer;font-size:.85rem">›</button>
+            </div>
+          </div>
+          <div class="demo-label">Pagination <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker">
+            <div style="display:flex;gap:.375rem">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--pulsa-accent)"></div>
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--pulsa-border)"></div>
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--pulsa-border)"></div>
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--pulsa-border)"></div>
+            </div>
+          </div>
+          <div class="demo-label">Carousel Dots <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA -->
+    <div class="showcase-panel" id="tab-data">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem;flex-direction:column;gap:.5rem">
+            <div class="pulsa-timeline-item" style="display:grid;grid-template-columns:auto 1fr;gap:0 1rem">
+              <div class="pulsa-timeline-side"><div class="pulsa-timeline-dot"></div><div class="pulsa-timeline-line" style="height:20px"></div></div>
+              <div style="font-size:.8rem;font-weight:600;padding-top:1px">Étape 1 terminée</div>
+            </div>
+            <div class="pulsa-timeline-item" style="display:grid;grid-template-columns:auto 1fr;gap:0 1rem">
+              <div class="pulsa-timeline-side"><div class="pulsa-timeline-dot pulsa-timeline-dot-success"></div><div class="pulsa-timeline-line" style="height:20px"></div></div>
+              <div style="font-size:.8rem;font-weight:600;padding-top:1px">Étape 2 en cours</div>
+            </div>
+            <div class="pulsa-timeline-item" style="display:grid;grid-template-columns:auto 1fr;gap:0 1rem">
+              <div class="pulsa-timeline-side"><div class="pulsa-timeline-dot pulsa-timeline-dot-outline"></div></div>
+              <div style="font-size:.8rem;color:var(--pulsa-text-muted);padding-top:1px">Étape 3 future</div>
+            </div>
+          </div>
+          <div class="demo-label">Timeline <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div style="width:100%">
+              <div style="display:flex;gap:.375rem;border-bottom:1px solid var(--pulsa-border);padding-bottom:.625rem;margin-bottom:.5rem">
+                <div style="flex:2;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pulsa-text-muted)">Nom</div>
+                <div style="flex:1;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pulsa-text-muted)">Statut</div>
+              </div>
+              <div style="display:flex;gap:.375rem;padding:.375rem 0"><div style="flex:2;font-size:.82rem">Alice</div><div style="flex:1"><span style="font-size:.7rem;font-weight:700;padding:.1rem .5rem;border-radius:999px;background:var(--pulsa-success-soft);color:var(--pulsa-success)">Actif</span></div></div>
+              <div style="display:flex;gap:.375rem;padding:.375rem 0;background:var(--pulsa-bg-hover);border-radius:6px"><div style="flex:2;font-size:.82rem;padding-left:.375rem">Bob</div><div style="flex:1"><span style="font-size:.7rem;font-weight:700;padding:.1rem .5rem;border-radius:999px;background:var(--pulsa-danger-soft);color:var(--pulsa-danger)">Inactif</span></div></div>
+            </div>
+          </div>
+          <div class="demo-label">Table striped <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="flex-direction:column;gap:.625rem;width:100%;padding:1.25rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.375rem"><span>HTML</span><span style="color:var(--pulsa-text-muted)">90%</span></div>
+              <div style="height:6px;border-radius:3px;background:var(--pulsa-border);overflow:hidden"><div style="height:100%;width:90%;background:var(--pulsa-accent);border-radius:3px"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.375rem"><span>CSS</span><span style="color:var(--pulsa-text-muted)">78%</span></div>
+              <div style="height:6px;border-radius:3px;background:var(--pulsa-border);overflow:hidden"><div style="height:100%;width:78%;background:var(--pulsa-success);border-radius:3px"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.375rem"><span>JS</span><span style="color:var(--pulsa-text-muted)">55%</span></div>
+              <div style="height:6px;border-radius:3px;background:var(--pulsa-border);overflow:hidden"><div style="height:100%;width:55%;background:var(--pulsa-warning);border-radius:3px"></div></div>
+            </div>
+          </div>
+          <div class="demo-label">Progress multi <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div style="display:flex;gap:.625rem;flex-direction:column;width:100%">
+              <div style="display:flex;align-items:center;gap:.75rem">
+                <div class="pulsa-rating" style="gap:2px;font-size:1rem">⭐⭐⭐⭐<span style="color:var(--pulsa-border)">★</span></div>
+                <span style="font-size:.8rem;color:var(--pulsa-text-muted)">4.0 / 5</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem">
+                <span style="color:var(--pulsa-text-muted);width:1.5rem;text-align:right">5★</span>
+                <div style="flex:1;height:5px;border-radius:3px;background:var(--pulsa-border);overflow:hidden"><div style="width:60%;height:100%;background:var(--pulsa-warning);border-radius:3px"></div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem">
+                <span style="color:var(--pulsa-text-muted);width:1.5rem;text-align:right">4★</span>
+                <div style="flex:1;height:5px;border-radius:3px;background:var(--pulsa-border);overflow:hidden"><div style="width:30%;height:100%;background:var(--pulsa-warning);border-radius:3px"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Rating + distribution <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div style="display:flex;gap:.375rem;align-items:flex-end;height:64px">
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:40%"></div>
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:70%"></div>
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:55%"></div>
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:90%"></div>
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:65%"></div>
+              <div style="flex:1;background:var(--pulsa-accent);border-radius:4px 4px 0 0;height:80%"></div>
+              <div style="flex:1;background:var(--pulsa-accent-soft);border:1px dashed var(--pulsa-accent);border-radius:4px 4px 0 0;height:50%"></div>
+            </div>
+          </div>
+          <div class="demo-label">Bar chart CSS <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview" style="padding:1rem">
+            <div class="pulsa-cal-mini" style="width:100%;border:none;background:transparent">
+              <div class="pulsa-cal-header" style="padding:.5rem 0;border:none">
+                <button class="pulsa-cal-nav">‹</button>
+                <span class="pulsa-cal-month">Mars 2026</span>
+                <button class="pulsa-cal-nav">›</button>
+              </div>
+              <div class="pulsa-cal-grid" style="padding:0">
+                <div class="pulsa-cal-days-row">
+                  <span class="pulsa-cal-day-name">Lu</span><span class="pulsa-cal-day-name">Ma</span><span class="pulsa-cal-day-name">Me</span><span class="pulsa-cal-day-name">Je</span><span class="pulsa-cal-day-name">Ve</span><span class="pulsa-cal-day-name">Sa</span><span class="pulsa-cal-day-name">Di</span>
+                </div>
+                <div class="pulsa-cal-days-row">
+                  <span class="pulsa-cal-day other-month">24</span><span class="pulsa-cal-day other-month">25</span><span class="pulsa-cal-day other-month">26</span><span class="pulsa-cal-day other-month">27</span><span class="pulsa-cal-day other-month">28</span><span class="pulsa-cal-day">1</span><span class="pulsa-cal-day">2</span>
+                </div>
+                <div class="pulsa-cal-days-row">
+                  <span class="pulsa-cal-day">3</span><span class="pulsa-cal-day">4</span><span class="pulsa-cal-day">5</span><span class="pulsa-cal-day">6</span><span class="pulsa-cal-day">7</span><span class="pulsa-cal-day">8</span><span class="pulsa-cal-day">9</span>
+                </div>
+                <div class="pulsa-cal-days-row">
+                  <span class="pulsa-cal-day">10</span><span class="pulsa-cal-day">11</span><span class="pulsa-cal-day">12</span><span class="pulsa-cal-day">13</span><span class="pulsa-cal-day">14</span><span class="pulsa-cal-day">15</span><span class="pulsa-cal-day">16</span>
+                </div>
+                <div class="pulsa-cal-days-row">
+                  <span class="pulsa-cal-day">17</span><span class="pulsa-cal-day">18</span><span class="pulsa-cal-day selected has-event">19</span><span class="pulsa-cal-day has-event">20</span><span class="pulsa-cal-day">21</span><span class="pulsa-cal-day today">22</span><span class="pulsa-cal-day">23</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Calendrier mini <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERLAYS -->
+    <div class="showcase-panel" id="tab-overlay">
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1.5rem">
+            <div style="background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:16px;padding:1.25rem;max-width:220px;box-shadow:var(--pulsa-shadow-lg)">
+              <div style="font-weight:700;margin-bottom:.375rem;font-size:.95rem">Confirmation</div>
+              <div style="font-size:.78rem;color:var(--pulsa-text-muted);margin-bottom:1rem">Supprimer cet élément ?</div>
+              <div style="display:flex;gap:.5rem;justify-content:flex-end">
+                <button style="padding:.375rem .75rem;border-radius:8px;background:transparent;border:1px solid var(--pulsa-border);color:var(--pulsa-text-muted);font-size:.78rem;cursor:pointer">Annuler</button>
+                <button style="padding:.375rem .75rem;border-radius:8px;background:var(--pulsa-danger);border:none;color:white;font-size:.78rem;font-weight:600;cursor:pointer">Supprimer</button>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Modal de confirmation <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker">
+            <div style="position:relative;display:inline-block">
+              <button style="padding:.5rem 1rem;border-radius:8px;background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);color:var(--pulsa-text-primary);cursor:pointer;font-size:.85rem">Hover moi</button>
+              <div style="position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:8px;padding:.5rem .875rem;font-size:.75rem;white-space:nowrap;box-shadow:var(--pulsa-shadow-md);color:var(--pulsa-text-secondary)">Tooltip en haut ↑</div>
+            </div>
+          </div>
+          <div class="demo-label">Tooltip <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="gap:.5rem;flex-direction:column">
+            <div style="background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);border-radius:10px;padding:.75rem 1rem;max-width:220px">
+              <div style="display:flex;gap:.75rem;align-items:center">
+                <div style="font-size:1.25rem">🎉</div>
+                <div><div style="font-size:.82rem;font-weight:600">Félicitations !</div><div style="font-size:.72rem;color:var(--pulsa-text-muted)">Niveau 10 atteint.</div></div>
+                <button style="margin-left:auto;background:none;border:none;color:var(--pulsa-text-muted);cursor:pointer;font-size:.875rem">×</button>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Toast enrichi <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1rem">
+            <div style="background:var(--pulsa-bg-card);border:1px solid var(--pulsa-border);border-radius:12px;overflow:hidden;width:100%;max-width:220px;box-shadow:var(--pulsa-shadow-md)">
+              <div style="display:flex;flex-direction:column">
+                <button style="display:flex;align-items:center;gap:.625rem;padding:.625rem .875rem;border:none;background:var(--pulsa-bg-hover);color:var(--pulsa-text-primary);font-size:.82rem;cursor:pointer;text-align:left">✏️ Modifier</button>
+                <div style="height:1px;background:var(--pulsa-border)"></div>
+                <button style="display:flex;align-items:center;gap:.625rem;padding:.625rem .875rem;border:none;background:transparent;color:var(--pulsa-text-muted);font-size:.82rem;cursor:pointer;text-align:left">🔗 Partager</button>
+                <div style="height:1px;background:var(--pulsa-border)"></div>
+                <button style="display:flex;align-items:center;gap:.625rem;padding:.625rem .875rem;border:none;background:transparent;color:var(--pulsa-danger);font-size:.82rem;cursor:pointer;text-align:left">🗑️ Supprimer</button>
+              </div>
+            </div>
+          </div>
+          <div class="demo-label">Dropdown menu <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1rem">
+            <div class="pulsa-callout pulsa-callout-info" style="width:100%">
+              <div class="pulsa-callout-icon">💡</div>
+              <div class="pulsa-callout-body"><div class="pulsa-callout-title">Info</div>Voici une note d'information importante.</div>
+            </div>
+          </div>
+          <div class="demo-label">Callout <span class="demo-copy-btn">Copier</span></div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-preview preview-checker" style="padding:1rem">
+            <div style="background:var(--pulsa-bg-card);border:1px solid var(--pulsa-border);border-bottom:1px solid var(--pulsa-border);border-radius:12px;overflow:hidden;width:100%">
+              <button style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;border:none;background:transparent;color:var(--pulsa-text-primary);font-size:.85rem;font-weight:600;cursor:pointer">
+                Comment ça marche ?<span style="color:var(--pulsa-text-muted)">+</span>
+              </button>
+              <div style="padding:.25rem 1rem .75rem;font-size:.82rem;color:var(--pulsa-text-muted);border-top:1px solid var(--pulsa-border)">Tu poses une question et tu obtiens une réponse.</div>
+            </div>
+          </div>
+          <div class="demo-label">Accordion <span class="demo-copy-btn">Copier</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ ANIMATIONS ══════════════════════════════ -->
+<section id="animations" class="section">
+  <div class="section-label">Animations</div>
+  <h2 class="section-title">Donne vie<br>à ton interface.</h2>
+  <p class="section-desc">40+ keyframes prêtes. Clique sur une carte pour déclencher l'animation.</p>
+
+  <div class="anim-grid">
+    <div class="anim-card" data-anim="pulsa-fadeInUp"><div class="anim-box">↑</div><div class="anim-name">fadeInUp</div></div>
+    <div class="anim-card" data-anim="pulsa-fadeInDown"><div class="anim-box">↓</div><div class="anim-name">fadeInDown</div></div>
+    <div class="anim-card" data-anim="pulsa-zoomIn"><div class="anim-box">⊕</div><div class="anim-name">zoomIn</div></div>
+    <div class="anim-card" data-anim="pulsa-zoomInBounce"><div class="anim-box">🎯</div><div class="anim-name">zoomInBounce</div></div>
+    <div class="anim-card" data-anim="pulsa-flipInX"><div class="anim-box">↔</div><div class="anim-name">flipInX</div></div>
+    <div class="anim-card" data-anim="pulsa-flipInY"><div class="anim-box">↕</div><div class="anim-name">flipInY</div></div>
+    <div class="anim-card" data-anim="pulsa-rollIn"><div class="anim-box">⟳</div><div class="anim-name">rollIn</div></div>
+    <div class="anim-card" data-anim="pulsa-lightSpeed"><div class="anim-box">⚡</div><div class="anim-name">lightSpeed</div></div>
+    <div class="anim-card" data-anim="pulsa-bounce"><div class="anim-box">🏀</div><div class="anim-name">bounce</div></div>
+    <div class="anim-card" data-anim="pulsa-shake"><div class="anim-box">〰</div><div class="anim-name">shake</div></div>
+    <div class="anim-card" data-anim="pulsa-wiggle"><div class="anim-box">🐛</div><div class="anim-name">wiggle</div></div>
+    <div class="anim-card" data-anim="pulsa-heartbeat"><div class="anim-box">❤️</div><div class="anim-name">heartbeat</div></div>
+    <div class="anim-card" data-anim="pulsa-tada"><div class="anim-box">🎉</div><div class="anim-name">tada</div></div>
+    <div class="anim-card" data-anim="pulsa-rubberBand"><div class="anim-box">🫧</div><div class="anim-name">rubberBand</div></div>
+    <div class="anim-card" data-anim="pulsa-jello"><div class="anim-box">🟡</div><div class="anim-name">jello</div></div>
+    <div class="anim-card" data-anim="pulsa-swing"><div class="anim-box">🎪</div><div class="anim-name">swing</div></div>
+    <div class="anim-card" data-anim="pulsa-float"><div class="anim-box">☁️</div><div class="anim-name">float</div></div>
+    <div class="anim-card" data-anim="pulsa-breathe"><div class="anim-box">🫁</div><div class="anim-name">breathe</div></div>
+    <div class="anim-card" data-anim="pulsa-ping"><div class="anim-box">📡</div><div class="anim-name">ping</div></div>
+    <div class="anim-card" data-anim="pulsa-morphBlob"><div class="anim-box" style="border-radius:60% 40% 30% 70% / 60% 30% 70% 40%">🫧</div><div class="anim-name">morphBlob</div></div>
+    <div class="anim-card" data-anim="pulsa-glowPulse"><div class="anim-box">✨</div><div class="anim-name">glowPulse</div></div>
+    <div class="anim-card" data-anim="pulsa-skewIn"><div class="anim-box">/</div><div class="anim-name">skewIn</div></div>
+    <div class="anim-card" data-anim="pulsa-rotateIn"><div class="anim-box">🔄</div><div class="anim-name">rotateIn</div></div>
+    <div class="anim-card" data-anim="pulsa-unblur"><div class="anim-box">👁</div><div class="anim-name">unblur</div></div>
+  </div>
+
+  <!-- Typewriter demo -->
+  <div style="margin-top:3rem;padding:2.5rem;background:var(--pulsa-bg-card);border:1px solid var(--pulsa-border);border-radius:20px;text-align:center">
+    <div class="section-label" style="justify-content:center">Effets spéciaux</div>
+    <div style="font-family:var(--ff-display);font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;margin:1rem 0;display:inline-block;overflow:hidden;white-space:nowrap;border-right:3px solid var(--pulsa-accent);animation:pulsa-typewriter 3s steps(30) forwards, pulsa-caretBlink .6s step-end infinite">Construit avec Pulsa CSS 🚀</div>
+    <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
+      <div style="text-align:center">
+        <div class="pulsa-blob" style="width:80px;height:80px;background:var(--pulsa-accent-soft);border:2px solid var(--pulsa-accent);display:flex;align-items:center;justify-content:center;font-size:1.75rem;margin:0 auto .75rem">🫧</div>
+        <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Blob Morph</div>
+      </div>
+      <div style="text-align:center">
+        <div class="pulsa-neon" style="font-family:var(--ff-display);font-size:2rem;font-weight:900;color:var(--pulsa-accent);margin-bottom:.75rem">NEON</div>
+        <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Neon Glow</div>
+      </div>
+      <div style="text-align:center">
+        <div class="pulsa-border-gradient-rainbow" style="padding:1rem 1.5rem;border-radius:12px;font-weight:700;margin-bottom:.75rem">Rainbow</div>
+        <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Gradient Border</div>
+      </div>
+      <div style="text-align:center">
+        <div class="pulsa-text-gradient-cool" style="font-family:var(--ff-display);font-size:2rem;font-weight:900;margin-bottom:.75rem">COOL</div>
+        <div style="font-size:.8rem;color:var(--pulsa-text-muted)">Text Gradient</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ THEMES ══════════════════════════════ -->
+<section id="themes" style="background:var(--pulsa-bg-secondary);border-top:1px solid var(--pulsa-border);border-bottom:1px solid var(--pulsa-border);padding:5rem 0">
+  <div style="max-width:var(--max);margin:0 auto;padding:0 2rem">
+    <div class="section-label">Thèmes</div>
+    <h2 class="section-title">Dark, Light, et<br>6 couleurs d'accent.</h2>
+    <p class="section-desc">Un seul attribut HTML suffit. La cascade CSS fait tout le reste.</p>
+
+    <!-- Accent picker live -->
+    <div style="margin-top:2.5rem;padding:1.5rem;background:var(--pulsa-bg-card);border:1px solid var(--pulsa-border);border-radius:16px">
+      <div style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pulsa-text-muted);margin-bottom:1rem">Changer l'accent live →</div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+        <div data-live-accent="rose"   style="width:28px;height:28px;border-radius:50%;background:#f43f5e;cursor:pointer;border:3px solid white;box-shadow:0 0 0 2px #f43f5e"></div>
+        <div data-live-accent="purple" style="width:28px;height:28px;border-radius:50%;background:#8b5cf6;cursor:pointer;border:3px solid transparent"></div>
+        <div data-live-accent="blue"   style="width:28px;height:28px;border-radius:50%;background:#3b82f6;cursor:pointer;border:3px solid transparent"></div>
+        <div data-live-accent="green"  style="width:28px;height:28px;border-radius:50%;background:#22c55e;cursor:pointer;border:3px solid transparent"></div>
+        <div data-live-accent="orange" style="width:28px;height:28px;border-radius:50%;background:#f97316;cursor:pointer;border:3px solid transparent"></div>
+        <div data-live-accent="pink"   style="width:28px;height:28px;border-radius:50%;background:#ec4899;cursor:pointer;border:3px solid transparent"></div>
+        <span style="font-size:.8rem;color:var(--pulsa-text-muted);margin-left:.5rem">data-accent="<strong id="accentLabel" style="color:var(--pulsa-accent)">rose</strong>"</span>
+      </div>
+    </div>
+
+    <div class="theme-demo">
+      <!-- Dark preview -->
+      <div class="theme-panel theme-panel-dark">
+        <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem">
+          <div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#febc2e"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#28c840"></div>
+          <span style="font-size:.7rem;color:rgba(255,255,255,.3);margin-left:.5rem;font-family:var(--ff-mono)">data-theme="dark"</span>
+        </div>
+        <div style="display:flex;gap:.5rem;margin-bottom:.875rem">
+          <span style="padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;background:var(--pulsa-accent);color:white">Primary</span>
+          <span style="padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1)">Ghost</span>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.875rem">
+          <div style="font-size:.8rem;font-weight:600;color:#f4f4f5;margin-bottom:.25rem">Carte sombre</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.45)">Texte secondaire en mode dark.</div>
+        </div>
+      </div>
+      <!-- Light preview -->
+      <div class="theme-panel theme-panel-light">
+        <div style="display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem">
+          <div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#febc2e"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#28c840"></div>
+          <span style="font-size:.7rem;color:rgba(0,0,0,.3);margin-left:.5rem;font-family:var(--ff-mono)">data-theme="light"</span>
+        </div>
+        <div style="display:flex;gap:.5rem;margin-bottom:.875rem">
+          <span style="padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;background:var(--pulsa-accent);color:white">Primary</span>
+          <span style="padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;background:rgba(0,0,0,.05);color:rgba(0,0,0,.5);border:1px solid rgba(0,0,0,.1)">Ghost</span>
+        </div>
+        <div style="background:white;border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:.875rem;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div style="font-size:.8rem;font-weight:600;color:#0f172a;margin-bottom:.25rem">Carte claire</div>
+          <div style="font-size:.72rem;color:rgba(0,0,0,.4)">Texte secondaire en mode light.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;background:var(--pulsa-bg-card);border:1px solid var(--pulsa-border);border-radius:16px;padding:1.5rem">
+      <div style="font-size:.8rem;font-weight:700;color:var(--pulsa-text-muted);margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.08em">Utilisation HTML</div>
+      <div style="font-family:var(--ff-mono);font-size:.85rem;line-height:1.8;color:var(--pulsa-text-secondary)">
+        <span style="color:var(--pulsa-text-muted)">&lt;</span><span style="color:var(--pulsa-accent)">html</span>
+        <span style="color:#86efac"> data-theme</span><span style="color:var(--pulsa-text-muted)">=</span><span style="color:var(--pulsa-text-primary)">"dark"</span>
+        <span style="color:#86efac"> data-accent</span><span style="color:var(--pulsa-text-muted)">=</span><span style="color:var(--pulsa-text-primary)">"rose"</span>
+        <span style="color:var(--pulsa-text-muted)">&gt;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ INSTALL ══════════════════════════════ -->
+<section id="install" class="section">
+  <div class="section-label">Installation</div>
+  <h2 class="section-title">Prêt en<br>30 secondes.</h2>
+  <p class="section-desc">npm, CDN ou import direct — choisis la méthode qui te convient.</p>
+
+  <div class="install-card">
+    <div class="install-tabs">
+      <button class="install-tab active" data-itab="npm">npm</button>
+      <button class="install-tab" data-itab="cdn">CDN</button>
+      <button class="install-tab" data-itab="html">HTML</button>
+      <button class="install-tab" data-itab="js">JavaScript</button>
+    </div>
+
+    <div class="install-panel active" id="itab-npm">
+      <div class="install-body">
+        <div><span class="c-prompt">$</span> <span class="c-cmd">npm install <span class="c-str">pulsa-css</span></span></div>
+        <br>
+        <div><span class="c-cmt">// Dans ton fichier CSS ou SCSS :</span></div>
+        <div><span class="c-key">@import</span> <span class="c-str">'pulsa-css'</span>;</div>
+        <br>
+        <div><span class="c-cmt">// Ou import partiel (recommandé) :</span></div>
+        <div><span class="c-key">@import</span> <span class="c-str">'pulsa-css/pulsa-tokens.css'</span>;</div>
+        <div><span class="c-key">@import</span> <span class="c-str">'pulsa-css/pulsa-base.css'</span>;</div>
+        <div><span class="c-key">@import</span> <span class="c-str">'pulsa-css/pulsa-components.css'</span>;</div>
+      </div>
+      <div class="install-copy"><span class="install-file">package.json → pulsa-css@2.2.0</span><button class="install-copy-btn" data-copy-install="npm">Copier</button></div>
+    </div>
+
+    <div class="install-panel" id="itab-cdn">
+      <div class="install-body">
+        <div><span class="c-cmt">&lt;!-- Import complet via CDN --&gt;</span></div>
+        <div><span class="c-key">&lt;link</span> <span class="c-str">rel</span>=<span class="c-cmd">"stylesheet"</span></div>
+        <div>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">href</span>=<span class="c-cmd">"https://unpkg.com/pulsa-css@2/pulsa.css"</span><span class="c-key">/&gt;</span></div>
+        <br>
+        <div><span class="c-cmt">&lt;!-- Version spécifique --&gt;</span></div>
+        <div><span class="c-key">&lt;link</span> <span class="c-str">rel</span>=<span class="c-cmd">"stylesheet"</span></div>
+        <div>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">href</span>=<span class="c-cmd">"https://cdn.jsdelivr.net/npm/pulsa-css@2.2.0/pulsa.css"</span><span class="c-key">/&gt;</span></div>
+      </div>
+      <div class="install-copy"><span class="install-file">CDN — unpkg.com / jsdelivr.net</span><button class="install-copy-btn" data-copy-install="cdn">Copier</button></div>
+    </div>
+
+    <div class="install-panel" id="itab-html">
+      <div class="install-body">
+        <div><span class="c-key">&lt;!DOCTYPE html&gt;</span></div>
+        <div><span class="c-key">&lt;html</span> <span class="c-str">data-theme</span>=<span class="c-cmd">"dark"</span> <span class="c-str">data-accent</span>=<span class="c-cmd">"rose"</span><span class="c-key">&gt;</span></div>
+        <div>&lt;head&gt;</div>
+        <div>  &lt;<span class="c-key">link</span> <span class="c-str">rel</span>=<span class="c-cmd">"stylesheet"</span> <span class="c-str">href</span>=<span class="c-cmd">"pulsa.css"</span>/&gt;</div>
+        <div>&lt;/head&gt;</div>
+        <div>&lt;body&gt;</div>
+        <div>  &lt;<span class="c-key">button</span> <span class="c-str">class</span>=<span class="c-cmd">"pulsa-btn-primary"</span>&gt;Hello Pulsa !&lt;/<span class="c-key">button</span>&gt;</div>
+        <div>&lt;/body&gt;</div>
+        <div><span class="c-key">&lt;/html&gt;</span></div>
+      </div>
+      <div class="install-copy"><span class="install-file">index.html — configuration minimale</span><button class="install-copy-btn" data-copy-install="html">Copier</button></div>
+    </div>
+
+    <div class="install-panel" id="itab-js">
+      <div class="install-body">
+        <div><span class="c-cmt">// Theme toggle basique</span></div>
+        <div><span class="c-key">const</span> <span class="c-str">btn</span> = document.<span class="c-key">querySelector</span>(<span class="c-cmd">'#themeBtn'</span>);</div>
+        <div>btn.<span class="c-key">addEventListener</span>(<span class="c-cmd">'click'</span>, () =&gt; {</div>
+        <div>  <span class="c-key">const</span> html = document.<span class="c-str">documentElement</span>;</div>
+        <div>  html.dataset.theme = html.dataset.theme === <span class="c-cmd">'dark'</span> ? <span class="c-cmd">'light'</span> : <span class="c-cmd">'dark'</span>;</div>
+        <div>});</div>
+        <br>
+        <div><span class="c-cmt">// Scroll reveal avec Intersection Observer</span></div>
+        <div><span class="c-key">new</span> IntersectionObserver((entries) =&gt; {</div>
+        <div>  entries.<span class="c-key">forEach</span>(e =&gt; e.target.classList.toggle(<span class="c-cmd">'revealed'</span>, e.isIntersecting));</div>
+        <div>}).observe(document.<span class="c-key">querySelectorAll</span>(<span class="c-cmd">'[data-pulsa-reveal]'</span>));</div>
+      </div>
+      <div class="install-copy"><span class="install-file">main.js — exemples d'interaction</span><button class="install-copy-btn" data-copy-install="js">Copier</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ CTA FINAL ══════════════════════════════ -->
+<section style="padding:6rem 2rem;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--pulsa-border)">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%, var(--pulsa-accent-glow), transparent 60%);pointer-events:none"></div>
+  <div style="position:relative;z-index:1;max-width:600px;margin:0 auto">
+    <div class="section-label" style="justify-content:center">Prêt à commencer ?</div>
+    <h2 style="font-family:var(--ff-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin:1rem 0 1.5rem">Construis quelque chose<br>de beau, maintenant.</h2>
+    <p style="font-size:1.0625rem;color:var(--pulsa-text-muted);margin-bottom:2.5rem;line-height:1.65">Pulsa CSS est open source, gratuit, et prêt pour la production. Importe-le et commence à créer.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="#install" class="hero-btn-primary">⚡ Installer — npm i pulsa-css</a>
+      <a href="./docs.html" class="hero-btn-ghost">📖 Lire la documentation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Pulsa CSS</div>
+        <div class="footer-desc">Framework CSS dark-first avec 500+ composants, animations et thèmes dynamiques. Zéro dépendance JS.</div>
+        <div style="display:flex;gap:.75rem;margin-top:1.25rem">
+          <a href="#" style="width:32px;height:32px;border-radius:8px;background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);display:flex;align-items:center;justify-content:center;color:var(--pulsa-text-muted);font-size:.875rem;text-decoration:none;transition:color .15s,border-color .15s">📦</a>
+          <a href="#" style="width:32px;height:32px;border-radius:8px;background:var(--pulsa-bg-elevated);border:1px solid var(--pulsa-border);display:flex;align-items:center;justify-content:center;color:var(--pulsa-text-muted);font-size:.875rem;text-decoration:none">🔗</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Framework</div>
+        <a href="#components" class="footer-link">Composants</a>
+        <a href="#animations" class="footer-link">Animations</a>
+        <a href="#themes" class="footer-link">Thèmes</a>
+        <a href="#install" class="footer-link">Installation</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Ressources</div>
+        <a href="./docs.html" class="footer-link">Documentation</a>
+        <a href="https://github.com/gabrielrevest/PulsaHub" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.npmjs.com/package/pulsa-css" class="footer-link" target="_blank" rel="noopener">npm</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Fichiers CSS</div>
+        <a href="#" class="footer-link">pulsa-tokens.css</a>
+        <a href="#" class="footer-link">pulsa-components.css</a>
+        <a href="#" class="footer-link">pulsa-animations.css</a>
+        <a href="#" class="footer-link">pulsa-utilities.css</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Pulsa CSS — MIT License</span>
+      <span>Fait avec ❤️ par PulsaHub</span>
+      <span style="display:flex;gap:.375rem;align-items:center">
+        <span class="pulsa-badge" style="font-size:.65rem;padding:.1rem .4rem">v2.2.0</span>
+        <span style="color:var(--pulsa-text-muted)">500+ composants</span>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════ JS ══════════════════════════════ -->
+<script>
+  // ── Theme toggle
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const isDark = html.dataset.theme !== 'light';
+    html.dataset.theme = isDark ? 'light' : 'dark';
+    themeBtn.textContent = isDark ? '🌙' : '☀️';
+  });
+
+  // ── Accent picker (navbar + section)
+  function setAccent(accent) {
+    html.dataset.accent = accent;
+    document.getElementById('accentLabel').textContent = accent;
+    document.querySelectorAll('.nav-accent-dot').forEach(d => d.classList.toggle('active', d.dataset.accent === accent));
+    document.querySelectorAll('[data-live-accent]').forEach(d => {
+      const isActive = d.dataset.liveAccent === accent;
+      d.style.border = isActive ? '3px solid white' : '3px solid transparent';
+      d.style.boxShadow = isActive ? `0 0 0 2px ${d.style.background}` : 'none';
+    });
+  }
+  document.getElementById('accentPicker').addEventListener('click', e => {
+    const dot = e.target.closest('.nav-accent-dot');
+    if (dot) setAccent(dot.dataset.accent);
+  });
+  document.querySelectorAll('[data-live-accent]').forEach(d => {
+    d.addEventListener('click', () => setAccent(d.dataset.liveAccent));
+  });
+
+  // ── Showcase tabs
+  document.querySelectorAll('.showcase-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.showcase-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.showcase-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = document.getElementById('tab-' + tab.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ── Install tabs
+  document.querySelectorAll('.install-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = document.getElementById('itab-' + tab.dataset.itab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ── Animation cards click
+  document.querySelectorAll('.anim-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const box = card.querySelector('.anim-box');
+      const animName = card.dataset.anim;
+      box.style.animation = 'none';
+      box.offsetHeight;
+      box.style.animation = `${animName} 0.8s ease`;
+      setTimeout(() => box.style.animation = '', 1000);
+    });
+  });
+
+  // ── Copy buttons
+  document.querySelectorAll('.demo-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.dataset.copy || btn.closest('.demo-card')?.querySelector('.demo-preview')?.innerHTML?.trim() || '';
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copié !';
+        btn.style.color = 'var(--pulsa-success)';
+        setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1500);
+      });
+    });
+  });
+  document.querySelectorAll('.install-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = btn.closest('.install-panel');
+      const text = panel?.querySelector('.install-body')?.innerText || '';
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copié !';
+        setTimeout(() => btn.textContent = orig, 1500);
+      });
+    });
+  });
+
+  // ── Scroll spy navbar
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // ── Reading progress
+  const prog = document.createElement('div');
+  prog.className = 'pulsa-reading-progress pulsa-reading-progress-glow';
+  document.body.prepend(prog);
+  window.addEventListener('scroll', () => {
+    const p = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    prog.style.width = p + '%';
+  });
+
+  // ── Scroll reveal
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('[data-pulsa-reveal]').forEach(el => revealObs.observe(el));
+
+  // ── Mobile burger (placeholder)
+  document.getElementById('navBurger')?.addEventListener('click', () => {
+    alert('Menu mobile — à connecter à ton composant .pulsa-navbar-mobile-menu !');
+  });
+</script>
+</body>
+</html>

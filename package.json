@@ -1,0 +1,65 @@
+{
+  "name": "pulsa-css",
+  "version": "2.2.0",
+  "description": "Dark-first CSS framework with theming, 300+ components, zero JS dependencies",
+  "main": "index.js",
+  "style": "pulsa.css",
+  "exports": {
+    ".": "./pulsa.css",
+    "./pulsa.css": "./pulsa.css",
+    "./pulsa-tokens.css": "./pulsa-tokens.css",
+    "./pulsa-base.css": "./pulsa-base.css",
+    "./pulsa-animations.css": "./pulsa-animations.css",
+    "./pulsa-components.css": "./pulsa-components.css",
+    "./pulsa-forms.css": "./pulsa-forms.css",
+    "./pulsa-layout.css": "./pulsa-layout.css",
+    "./pulsa-extras.css": "./pulsa-extras.css",
+    "./pulsa-universal.css": "./pulsa-universal.css",
+    "./pulsa-additions.css": "./pulsa-additions.css",
+    "./pulsa-missing.css": "./pulsa-missing.css",
+    "./pulsa-mega.css": "./pulsa-mega.css",
+    "./pulsa-utilities.css": "./pulsa-utilities.css"
+  },
+  "files": [
+    "pulsa.css",
+    "pulsa-tokens.css",
+    "pulsa-base.css",
+    "pulsa-animations.css",
+    "pulsa-components.css",
+    "pulsa-forms.css",
+    "pulsa-layout.css",
+    "pulsa-extras.css",
+    "pulsa-universal.css",
+    "pulsa-additions.css",
+    "pulsa-missing.css",
+    "pulsa-mega.css",
+    "pulsa-utilities.css",
+    "index.js",
+    "README.md"
+  ],
+  "keywords": [
+    "css",
+    "framework",
+    "dark-theme",
+    "design-system",
+    "ui-components",
+    "web-app",
+    "dashboard",
+    "components",
+    "animations",
+    "pulsa"
+  ],
+  "author": "PulsaHub",
+  "license": "MIT",
+  "homepage": "https://github.com/gabrielrevest/PulsaHub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabrielrevest/PulsaHub.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gabrielrevest/PulsaHub/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark" data-accent="rose">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Pulsa CSS — Documentation v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./pulsa.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"/>
+  <style>
+    :root { --nh:58px; --sw:260px; }
+    /* ─── NAV ─── */
+    .dn { position:fixed;top:0;left:0;right:0;height:var(--nh);background:rgba(10,10,13,.94);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);z-index:300;display:flex;align-items:center;gap:.75rem;padding:0 1.25rem; }
+    .dn-logo { display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:1.1rem;letter-spacing:-.03em;color:var(--text-primary);text-decoration:none;flex-shrink:0; }
+    .dn-logo svg { color:var(--accent); }
+    .dn-v { font-size:.6rem;background:var(--accent-soft);color:var(--accent);padding:.1rem .4rem;border-radius:999px;font-weight:700; }
+    .dn-links { display:flex;gap:2px;align-items:center; }
+    .dn-link { padding:.4rem .75rem;font-size:.82rem;color:var(--text-secondary);text-decoration:none;border-radius:var(--radius-sm);transition:var(--transition); }
+    .dn-link:hover { background:var(--bg-hover);color:var(--text-primary); }
+    .dn-link.on { color:var(--accent); }
+    .dn-search { flex:1;max-width:220px;display:flex;align-items:center;gap:.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.35rem .75rem;cursor:text;transition:var(--transition); }
+    .dn-search:focus-within { border-color:var(--border-hover); }
+    .dn-search input { flex:1;background:transparent;border:none;outline:none;font-size:.8rem;color:var(--text-primary);font-family:inherit; }
+    .dn-search input::placeholder { color:var(--text-muted); }
+    .dn-sk { font-size:.6rem;padding:.1rem .35rem;background:var(--bg-elevated);border:1px solid var(--border);border-radius:4px;color:var(--text-muted); }
+    .dn-r { margin-left:auto;display:flex;align-items:center;gap:.5rem; }
+    .dn-acs { display:flex;gap:.3rem; }
+    .dac { width:17px;height:17px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:var(--transition); }
+    .dac:hover,.dac.on { border-color:white;transform:scale(1.2); }
+    .dn-tb { width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);font-size:.9rem; }
+    .dn-tb:hover { border-color:var(--border-hover);color:var(--accent); }
+    .dn-burger { display:none;width:36px;height:36px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text-primary);cursor:pointer;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
+    /* ─── LAYOUT ─── */
+    .dw { display:flex;margin-top:var(--nh);min-height:calc(100vh - var(--nh)); }
+    /* ─── SIDEBAR ─── */
+    .ds { width:var(--sw);flex-shrink:0;position:sticky;top:var(--nh);height:calc(100vh - var(--nh));overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-secondary);padding:.75rem 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent; }
+    .ds::-webkit-scrollbar { width:3px; }
+    .ds::-webkit-scrollbar-thumb { background:var(--border); }
+    .ds-ss { display:flex;align-items:center;gap:.5rem;margin:.1rem .75rem .75rem;padding:.4rem .75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm); }
+    .ds-ss input { flex:1;background:transparent;border:none;outline:none;font-size:.78rem;color:var(--text-primary);font-family:inherit; }
+    .ds-ss input::placeholder { color:var(--text-muted); }
+    .ds-g { margin-bottom:.25rem; }
+    .ds-t { font-size:.6rem;font-weight:900;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;padding:.75rem 1rem .2rem; }
+    .ds-a { display:flex;align-items:center;gap:.4rem;padding:.32rem 1rem;font-size:.8rem;color:var(--text-secondary);text-decoration:none;transition:var(--transition);border-left:2px solid transparent;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-right:.25rem; }
+    .ds-a:hover { background:var(--bg-hover);color:var(--text-primary); }
+    .ds-a.on { color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft);font-weight:600; }
+    .ds-dot { width:6px;height:6px;border-radius:50%;flex-shrink:0; }
+    .ds-nb { margin-left:auto;font-size:.58rem;padding:.08rem .35rem;border-radius:999px;font-weight:700; }
+    .ds-nb.n { background:var(--success);color:white; }
+    .ds-nb.p { background:var(--bg-elevated);color:var(--text-muted); }
+    /* ─── MAIN ─── */
+    .dm { flex:1;min-width:0;padding:2rem 2.5rem;max-width:900px;margin:0 auto;width:100%; }
+    /* ─── SECTION ─── */
+    .sec { margin-bottom:4.5rem;scroll-margin-top:calc(var(--nh) + 1.25rem); }
+    .sec-h { font-size:1.5rem;font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:.875rem;margin-bottom:.5rem; }
+    .sec-h::after { content:'';flex:1;height:1px;background:var(--border); }
+    .sec-d { font-size:.92rem;color:var(--text-secondary);margin-bottom:1.75rem;line-height:1.65; }
+    .sub { margin-bottom:2rem; }
+    .sub-h { font-size:.9rem;font-weight:700;color:var(--text-primary);margin-bottom:.875rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem; }
+    .pt { font-size:.58rem;padding:.08rem .35rem;border-radius:4px;font-weight:700;background:var(--accent-soft);color:var(--accent); }
+    /* ─── DEMO BOX ─── */
+    .demo { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.75rem;display:flex;flex-wrap:wrap;gap:.875rem;align-items:flex-start; }
+    .demo.c { justify-content:center; }
+    .demo.col { flex-direction:column; }
+    .demo.p0 { padding:0;overflow:hidden; }
+    /* ─── CODE ─── */
+    .code { border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius-lg) var(--radius-lg);overflow:hidden;position:relative; }
+    .code pre { margin:0;border-radius:0;background:#13131a!important;max-height:240px;font-size:.77rem; }
+    .cp { position:absolute;top:.5rem;right:.5rem;padding:.22rem .55rem;font-size:.68rem;font-weight:700;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-muted);cursor:pointer;transition:var(--transition);font-family:inherit;z-index:1; }
+    .cp:hover { background:var(--accent);color:white;border-color:var(--accent); }
+    .cp.ok { background:var(--success);color:white;border-color:var(--success); }
+    /* ─── HERO DOC ─── */
+    .hero-doc { padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:3rem; }
+    .hero-doc h1 { font-size:clamp(2rem,5vw,3.25rem);font-weight:800;letter-spacing:-.05em;margin-bottom:.6rem;line-height:1.1; }
+    .hero-doc p { font-size:.95rem;color:var(--text-secondary);max-width:560px;line-height:1.65;margin-bottom:1.25rem; }
+    .hstats { display:flex;gap:2.5rem;margin-top:1.5rem;flex-wrap:wrap; }
+    .hstat-v { font-size:1.55rem;font-weight:800;color:var(--accent);display:block; }
+    .hstat-l { font-size:.7rem;color:var(--text-muted);margin-top:.05rem; }
+    /* ─── API TABLE ─── */
+    .at { width:100%;border-collapse:collapse;font-size:.8rem;margin:.625rem 0; }
+    .at th,.at td { padding:.45rem .875rem;text-align:left;border-bottom:1px solid var(--border); }
+    .at th { color:var(--text-muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em; }
+    .at tr:last-child td { border-bottom:none; }
+    .at tbody tr:hover { background:var(--bg-hover); }
+    .mn { font-family:var(--font-mono);font-size:.78em;background:var(--bg-elevated);padding:.1rem .3rem;border-radius:4px; }
+    /* ─── TOKENS ─── */
+    .tgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.5rem;margin:.625rem 0; }
+    .tok { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden; }
+    .sw { height:40px; }
+    .ti { padding:.35rem .5rem; }
+    .tn { font-family:var(--font-mono);font-size:.65rem;font-weight:700;display:block;color:var(--text-primary); }
+    .tv { font-family:var(--font-mono);font-size:.6rem;color:var(--text-muted); }
+    /* ─── TIP ─── */
+    .tip { display:flex;gap:.75rem;padding:.875rem 1.1rem;background:var(--accent-soft);border:1px solid var(--border-hover);border-radius:var(--radius);margin:1rem 0;font-size:.82rem;color:var(--text-secondary); }
+    /* ─── OVERLAY ─── */
+    .dov { display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:250;backdrop-filter:blur(4px); }
+    /* ─── BTT ─── */
+    #btt { position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);transition:var(--transition);opacity:0;pointer-events:none;z-index:200;font-size:1rem; }
+    #btt.v { opacity:1;pointer-events:all; }
+    #btt:hover { background:var(--accent);color:white;border-color:var(--accent);transform:translateY(-2px); }
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:960px) {
+      :root { --sw:0px; }
+      .ds { position:fixed;top:var(--nh);left:0;bottom:0;width:265px;z-index:260;display:none;border-right:1px solid var(--border);box-shadow:var(--shadow-lg); }
+      .ds.open,.dov.open { display:block; }
+      .dn-burger { display:flex; }
+      .dn-links { display:none; }
+    }
+    @media(max-width:640px) { .dm { padding:1.25rem 1rem; } .hero-doc h1 { font-size:1.75rem; } .dn-search { display:none; } }
+  </style>
+</head>
+<body class="pulsa-bg-glow">
+
+<!-- NAV -->
+<nav class="dn">
+  <button class="dn-burger" id="burg">☰</button>
+  <a href="./index.html" class="dn-logo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    Pulsa CSS <span class="dn-v">v2</span>
+  </a>
+  <div class="dn-links">
+    <a href="#layout-sys"   class="dn-link">Layout</a>
+    <a href="#typography"   class="dn-link">Typo</a>
+    <a href="#components"   class="dn-link">Composants</a>
+    <a href="#sections-all" class="dn-link">Sections</a>
+    <a href="#forms-adv"    class="dn-link">Formulaires</a>
+    <a href="#media"        class="dn-link">Media</a>
+    <a href="#animations"   class="dn-link">Animations</a>
+  </div>
+  <div class="dn-search" onclick="document.getElementById('ns').focus()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="ns" placeholder="Rechercher…" autocomplete="off"/>
+    <span class="dn-sk">Ctrl K</span>
+  </div>
+  <div class="dn-r">
+    <div class="dn-acs">
+      <div class="dac on" data-a="rose"   style="background:#f43f5e" title="Rose"></div>
+      <div class="dac"    data-a="purple" style="background:#8b5cf6" title="Purple"></div>
+      <div class="dac"    data-a="blue"   style="background:#3b82f6" title="Blue"></div>
+      <div class="dac"    data-a="green"  style="background:#22c55e" title="Green"></div>
+      <div class="dac"    data-a="orange" style="background:#f97316" title="Orange"></div>
+      <div class="dac"    data-a="pink"   style="background:#ec4899" title="Pink"></div>
+    </div>
+    <button class="dn-tb" id="tb">🌙</button>
+  </div>
+</nav>
+
+<div class="dov" id="ov"></div>
+
+<div class="dw">
+<!-- SIDEBAR -->
+<aside class="ds" id="sb">
+  <div class="ds-ss">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="sbs" placeholder="Filtrer…" autocomplete="off"/>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Démarrage</p>
+    <a href="#intro"   class="ds-a">Introduction</a>
+    <a href="#install" class="ds-a">Installation</a>
+    <a href="#config"  class="ds-a">Thème & Accents</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Fondations</p>
+    <a href="#tokens"     class="ds-a">Design Tokens</a>
+    <a href="#typography" class="ds-a">Typographie</a>
+    <a href="#spacing"    class="ds-a">Espacement</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Layout</p>
+    <a href="#layout-sys"  class="ds-a">Container</a>
+    <a href="#grid-sys"    class="ds-a">Grid & Colonnes</a>
+    <a href="#masonry"     class="ds-a">Masonry</a>
+    <a href="#split"       class="ds-a">Split Screen</a>
+    <a href="#sidebar-lay" class="ds-a">Content + Sidebar</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Navigation</p>
+    <a href="#navbar"    class="ds-a">Navbar <span class="ds-nb n">New</span></a>
+    <a href="#mega-menu" class="ds-a">Mega Menu</a>
+    <a href="#tabs"      class="ds-a">Tabs & Segmented</a>
+    <a href="#breadcrumb" class="ds-a">Breadcrumb</a>
+    <a href="#pagination" class="ds-a">Pagination</a>
+    <a href="#toc"        class="ds-a">Table of Contents</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Composants</p>
+    <a href="#components" class="ds-a">Boutons</a>
+    <a href="#badges"     class="ds-a">Badges & Tags</a>
+    <a href="#cards-gen"  class="ds-a">Cards génériques</a>
+    <a href="#alert"      class="ds-a">Alertes & Callout</a>
+    <a href="#modal"      class="ds-a">Modal</a>
+    <a href="#drawer"     class="ds-a">Drawer / Offcanvas</a>
+    <a href="#dropdown"   class="ds-a">Dropdown</a>
+    <a href="#tooltip"    class="ds-a">Tooltip & Popover</a>
+    <a href="#accordion"  class="ds-a">Accordion & FAQ</a>
+    <a href="#table"      class="ds-a">Table</a>
+    <a href="#list"       class="ds-a">Listes</a>
+    <a href="#steps"      class="ds-a">Steps / Wizard</a>
+    <a href="#timeline"   class="ds-a">Timeline</a>
+    <a href="#skeleton"   class="ds-a">Skeleton & Loader</a>
+    <a href="#progress"   class="ds-a">Progress</a>
+    <a href="#kbd-sec"    class="ds-a">KBD Shortcuts</a>
+    <a href="#data-list"  class="ds-a">Data Key-Value</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Sections de page</p>
+    <a href="#hero-sec"   class="ds-a">Hero <span class="ds-nb n">5 styles</span></a>
+    <a href="#features"   class="ds-a">Features</a>
+    <a href="#testimonials" class="ds-a">Témoignages</a>
+    <a href="#pricing-sec"  class="ds-a">Pricing</a>
+    <a href="#cta-sec"    class="ds-a">CTA</a>
+    <a href="#faq-sec"    class="ds-a">FAQ</a>
+    <a href="#stats-sec"  class="ds-a">Statistiques</a>
+    <a href="#team-sec"   class="ds-a">Équipe</a>
+    <a href="#logo-cloud" class="ds-a">Logo Cloud</a>
+    <a href="#newsletter" class="ds-a">Newsletter</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Cards spécialisées</p>
+    <a href="#blog-cards"    class="ds-a">Blog / Article</a>
+    <a href="#product-cards" class="ds-a">E-commerce</a>
+    <a href="#event-cards"   class="ds-a">Event</a>
+    <a href="#team-cards"    class="ds-a">Équipe</a>
+    <a href="#testimonial-cards" class="ds-a">Témoignages</a>
+    <a href="#avatar-sec"    class="ds-a">Avatar</a>
+    <a href="#profile"       class="ds-a">Profile Card</a>
+    <a href="#kanban"        class="ds-a">Kanban Board</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Formulaires</p>
+    <a href="#forms-base"    class="ds-a">Champs de base</a>
+    <a href="#input-group"   class="ds-a">Input Group</a>
+    <a href="#toggle"        class="ds-a">Toggle & Checkbox</a>
+    <a href="#radio"         class="ds-a">Radio Card</a>
+    <a href="#select"        class="ds-a">Select</a>
+    <a href="#forms-adv"     class="ds-a">Float Label</a>
+    <a href="#file-drop"     class="ds-a">File Drop Zone</a>
+    <a href="#tag-input"     class="ds-a">Tag Input</a>
+    <a href="#autocomplete"  class="ds-a">Autocomplete</a>
+    <a href="#pw-strength"   class="ds-a">Password Strength</a>
+    <a href="#number-input"  class="ds-a">Number Input</a>
+    <a href="#wizard"        class="ds-a">Form Wizard</a>
+    <a href="#pin"           class="ds-a">PIN Input</a>
+    <a href="#range"         class="ds-a">Range Slider</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Media & Contenu</p>
+    <a href="#media"         class="ds-a">Galerie & Images</a>
+    <a href="#video"         class="ds-a">Vidéo Embed</a>
+    <a href="#code-blocks"   class="ds-a">Code & Terminal</a>
+    <a href="#blockquote"    class="ds-a">Citation</a>
+    <a href="#chart-sec"     class="ds-a">Charts CSS</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Feedback</p>
+    <a href="#toast"     class="ds-a">Toast</a>
+    <a href="#notif"     class="ds-a">Notifications</a>
+    <a href="#cookie"    class="ds-a">Cookie Banner</a>
+    <a href="#empty"     class="ds-a">Empty State</a>
+    <a href="#error-pg"  class="ds-a">Page 404</a>
+    <a href="#coming-soon" class="ds-a">Coming Soon</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Animations</p>
+    <a href="#animations" class="ds-a">Entrées</a>
+    <a href="#hover-fx"   class="ds-a">Hover Effects</a>
+    <a href="#loops"      class="ds-a">Boucles</a>
+    <a href="#stagger"    class="ds-a">Stagger</a>
+  </div>
+
+  <div class="ds-g"><p class="ds-t">Utilitaires</p>
+    <a href="#utilities" class="ds-a">Référence complète</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="dm" id="main">
+
+<!-- HERO DOC -->
+<div class="hero-doc pulsa-animate-fade-in" id="intro">
+  <p class="pulsa-overline">⚡ Framework CSS v2.0</p>
+  <h1>Pulsa CSS</h1>
+  <p>Framework CSS sombre & thémable, 100% universel. Composants prêts à l'emploi, sections de page complètes, layouts responsifs, animations. Zéro dépendance JavaScript.</p>
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+    <a href="#install" class="pulsa-btn pulsa-btn-primary pulsa-btn-pill">Démarrer →</a>
+    <a href="#layout-sys" class="pulsa-btn pulsa-btn-secondary pulsa-btn-pill">Layout</a>
+    <a href="#hero-sec" class="pulsa-btn pulsa-btn-ghost pulsa-btn-pill">Sections</a>
+    <a href="https://github.com" class="pulsa-btn pulsa-btn-ghost pulsa-btn-pill">GitHub</a>
+  </div>
+  <div class="hstats">
+    <div><span class="hstat-v">9</span><span class="hstat-l">Fichiers CSS</span></div>
+    <div><span class="hstat-v">500+</span><span class="hstat-l">Composants</span></div>
+    <div><span class="hstat-v">6</span><span class="hstat-l">Accents couleur</span></div>
+    <div><span class="hstat-v">0</span><span class="hstat-l">Dépendances JS</span></div>
+    <div><span class="hstat-v">∞</span><span class="hstat-l">Use cases</span></div>
+  </div>
+</div>
+
+<!-- INSTALL -->
+<section class="sec" id="install">
+  <h2 class="sec-h">Installation</h2>
+  <div class="sub"><h3 class="sub-h">npm <span class="pt">Recommandé</span></h3>
+  <div class="code"><button class="cp">Copier</button><pre><code class="language-bash">npm install pulsa-css</code></pre></div>
+  <div class="code" style="margin-top:.5rem;border-top:1px solid var(--border)"><button class="cp">Copier</button>
+<pre><code class="language-javascript">import 'pulsa-css';                       // tout
+import 'pulsa-css/pulsa-tokens.css';      // sélectif
+import 'pulsa-css/pulsa-universal.css';   // sections/layouts</code></pre></div></div>
+  <div class="sub"><h3 class="sub-h">CDN (lien direct)</h3>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;link rel="stylesheet" href="https://unpkg.com/pulsa-css/pulsa.css"&gt;</code></pre></div></div>
+</section>
+
+<!-- CONFIG -->
+<section class="sec" id="config">
+  <h2 class="sec-h">Thème & Accents</h2>
+  <div class="demo c">
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="document.documentElement.dataset.theme='dark'">🌙 Dark</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="document.documentElement.dataset.theme='light'">☀️ Light</button>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;html data-theme="dark"&gt;          &lt;!-- défaut --&gt;
+&lt;html data-theme="light"&gt;
+&lt;html data-accent="rose"&gt;         &lt;!-- rose|purple|blue|green|orange|pink --&gt;
+&lt;body class="pulsa-bg-glow"&gt;      &lt;!-- fond lumineux --&gt;</code></pre></div>
+</section>
+
+<!-- TOKENS -->
+<section class="sec" id="tokens">
+  <h2 class="sec-h">Design Tokens</h2>
+  <p class="sec-d">Variables CSS préfixées <code class="pulsa-code-inline">--pulsa-</code> avec alias sans préfixe.</p>
+  <div class="tgrid">
+    <div class="tok"><div class="sw" style="background:var(--bg-primary)"></div><div class="ti"><span class="tn">--bg-primary</span><span class="tv">#0a0a0d</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--bg-secondary)"></div><div class="ti"><span class="tn">--bg-secondary</span><span class="tv">#121215</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--bg-card);border:1px solid var(--border)"></div><div class="ti"><span class="tn">--bg-card</span><span class="tv">#18181c</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--bg-elevated)"></div><div class="ti"><span class="tn">--bg-elevated</span><span class="tv">#1e1e24</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--accent)"></div><div class="ti"><span class="tn">--accent</span><span class="tv">Dynamique</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--success)"></div><div class="ti"><span class="tn">--success</span><span class="tv">#22c55e</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--danger)"></div><div class="ti"><span class="tn">--danger</span><span class="tv">#ef4444</span></div></div>
+    <div class="tok"><div class="sw" style="background:var(--warning)"></div><div class="ti"><span class="tn">--warning</span><span class="tv">#eab308</span></div></div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="sec" id="typography">
+  <h2 class="sec-h">Typographie</h2>
+  <p class="sec-d">Classes <code class="pulsa-code-inline">.pulsa-h1</code> → <code class="pulsa-code-inline">.pulsa-h6</code>, display, lead, body, overline, blockquote…</p>
+  <div class="demo col" style="gap:.875rem">
+    <div class="pulsa-display" style="font-size:2.5rem">Display — Ultra Bold</div>
+    <div class="pulsa-h1">H1 — 3rem / 800</div>
+    <div class="pulsa-h2">H2 — 2.25rem / 700</div>
+    <div class="pulsa-h3">H3 — 1.75rem / 700</div>
+    <div class="pulsa-h4">H4 — 1.25rem / 600</div>
+    <div class="pulsa-lead">Lead — Texte d'introduction légèrement plus grand</div>
+    <div class="pulsa-body">Body — Texte standard de contenu en couleur secondaire</div>
+    <div class="pulsa-overline">Overline — Catégorie</div>
+    <p>Texte avec <mark class="pulsa-mark">surlignage</mark> et <code class="pulsa-code-inline">code inline</code> et <strong>gras</strong></p>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;h1 class="pulsa-display"&gt;Display&lt;/h1&gt;
+&lt;h1 class="pulsa-h1"&gt;Titre H1&lt;/h1&gt;
+&lt;p class="pulsa-lead"&gt;Introduction…&lt;/p&gt;
+&lt;p class="pulsa-body"&gt;Contenu…&lt;/p&gt;
+&lt;span class="pulsa-overline"&gt;Catégorie&lt;/span&gt;
+&lt;mark class="pulsa-mark"&gt;Surlignage&lt;/mark&gt;
+&lt;code class="pulsa-code-inline"&gt;code&lt;/code&gt;</code></pre></div>
+
+  <div class="sub"><h3 class="sub-h">Blockquote</h3>
+  <div class="demo col">
+    <blockquote class="pulsa-blockquote" style="width:100%">
+      Design is not just what it looks like and feels like. Design is how it works.
+      <cite class="pulsa-blockquote-author">— Steve Jobs</cite>
+    </blockquote>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;blockquote class="pulsa-blockquote"&gt;
+  Citation inspirante ici.
+  &lt;cite class="pulsa-blockquote-author"&gt;— Auteur&lt;/cite&gt;
+&lt;/blockquote&gt;</code></pre></div></div>
+
+  <div class="sub"><h3 class="sub-h">Listes stylisées</h3>
+  <div class="demo">
+    <ul class="pulsa-list-styled" style="flex:1">
+      <li>Item avec flèche accent</li>
+      <li>Deuxième point important</li>
+      <li>Troisième élément de liste</li>
+    </ul>
+    <ul class="pulsa-list-styled pulsa-list-check" style="flex:1">
+      <li>Fonctionnalité incluse</li>
+      <li>Support technique</li>
+      <li>Mises à jour gratuites</li>
+    </ul>
+    <ul class="pulsa-list-styled pulsa-list-disc" style="flex:1">
+      <li>Point bullet neutre</li>
+      <li>Autre élément</li>
+      <li>Encore un</li>
+    </ul>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;ul class="pulsa-list-styled"&gt;&lt;li&gt;Flèche accent&lt;/li&gt;&lt;/ul&gt;
+&lt;ul class="pulsa-list-styled pulsa-list-check"&gt;&lt;li&gt;Coche verte&lt;/li&gt;&lt;/ul&gt;
+&lt;ul class="pulsa-list-styled pulsa-list-disc"&gt;&lt;li&gt;Bullet neutre&lt;/li&gt;&lt;/ul&gt;</code></pre></div></div>
+</section>
+
+<!-- LAYOUT -->
+<section class="sec" id="layout-sys">
+  <h2 class="sec-h">Container</h2>
+  <p class="sec-d">Largeurs max prédéfinies, centrées automatiquement avec padding latéral.</p>
+  <div class="demo col" style="gap:.5rem">
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container-xs</code> — max 480px</div>
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container-sm</code> — max 640px</div>
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container-md</code> — max 768px</div>
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container</code> — max 1280px (défaut)</div>
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container-xl</code> — max 1440px</div>
+    <div style="background:var(--bg-elevated);padding:.5rem .875rem;border-radius:var(--radius-sm);font-size:var(--text-sm)"><code class="pulsa-code-inline">.pulsa-container-fluid</code> — 100%</div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-container"&gt;…&lt;/div&gt;
+&lt;div class="pulsa-container-sm"&gt;Contenu étroit&lt;/div&gt;
+&lt;div class="pulsa-container-xl"&gt;Contenu large&lt;/div&gt;</code></pre></div>
+</section>
+
+<section class="sec" id="grid-sys">
+  <h2 class="sec-h">Grid & Colonnes</h2>
+  <div class="sub"><h3 class="sub-h">Card grids auto-responsive</h3>
+  <div class="demo col">
+    <div class="pulsa-grid-3" style="width:100%">
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Col 1</div>
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Col 2</div>
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Col 3</div>
+    </div>
+    <div class="pulsa-grid-auto" style="width:100%">
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Auto A</div>
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Auto B</div>
+      <div class="pulsa-card" style="padding:.875rem;text-align:center">Auto C</div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-grid-2"&gt;…&lt;/div&gt; &lt;!-- 2 colonnes --&gt;
+&lt;div class="pulsa-grid-3"&gt;…&lt;/div&gt; &lt;!-- 3 colonnes --&gt;
+&lt;div class="pulsa-grid-4"&gt;…&lt;/div&gt; &lt;!-- 4 colonnes --&gt;
+&lt;div class="pulsa-grid-auto"&gt;…&lt;/div&gt;    &lt;!-- auto min 280px --&gt;
+&lt;div class="pulsa-grid-auto-sm"&gt;…&lt;/div&gt; &lt;!-- auto min 160px --&gt;
+&lt;div class="pulsa-grid-auto-lg"&gt;…&lt;/div&gt; &lt;!-- auto min 360px --&gt;</code></pre></div></div>
+
+  <div class="sub"><h3 class="sub-h">Système 12 colonnes</h3>
+  <div class="demo col">
+    <div class="pulsa-row" style="width:100%">
+      <div class="pulsa-col-8"><div class="pulsa-card" style="padding:.875rem">col-8</div></div>
+      <div class="pulsa-col-4"><div class="pulsa-card" style="padding:.875rem">col-4</div></div>
+    </div>
+    <div class="pulsa-row" style="width:100%">
+      <div class="pulsa-col-4"><div class="pulsa-card" style="padding:.875rem">col-4</div></div>
+      <div class="pulsa-col-4"><div class="pulsa-card" style="padding:.875rem">col-4</div></div>
+      <div class="pulsa-col-4"><div class="pulsa-card" style="padding:.875rem">col-4</div></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-row"&gt;
+  &lt;div class="pulsa-col-8"&gt;Principal&lt;/div&gt;
+  &lt;div class="pulsa-col-4"&gt;Sidebar&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- col-1 à col-12 disponibles --&gt;</code></pre></div></div>
+</section>
+
+<section class="sec" id="masonry">
+  <h2 class="sec-h">Masonry</h2>
+  <div class="demo p0">
+    <div class="pulsa-masonry" style="padding:1rem;width:100%">
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:100px">Item A — 100px</div></div>
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:160px">Item B — 160px</div></div>
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:80px">Item C — 80px</div></div>
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:140px">Item D — 140px</div></div>
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:120px">Item E — 120px</div></div>
+      <div class="pulsa-masonry-item"><div class="pulsa-card" style="padding:1rem;height:90px">Item F — 90px</div></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-masonry"&gt;   &lt;!-- 3 colonnes --&gt;
+  &lt;div class="pulsa-masonry-item"&gt;…&lt;/div&gt;
+  &lt;div class="pulsa-masonry-item"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-masonry-2 / .pulsa-masonry-4 disponibles --&gt;</code></pre></div>
+</section>
+
+<!-- NAVBAR -->
+<section class="sec" id="navbar">
+  <h2 class="sec-h">Navbar</h2>
+  <div class="demo p0" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0">
+    <nav class="pulsa-navbar" style="position:relative;top:auto;border-radius:var(--radius-lg) var(--radius-lg) 0 0">
+      <a href="#" class="pulsa-navbar-brand">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        MonApp
+      </a>
+      <ul class="pulsa-navbar-nav">
+        <li><a href="#" class="pulsa-navbar-link active">Accueil</a></li>
+        <li><a href="#" class="pulsa-navbar-link">Produits</a></li>
+        <li><a href="#" class="pulsa-navbar-link">Blog</a></li>
+        <li><a href="#" class="pulsa-navbar-link">À propos</a></li>
+      </ul>
+      <div class="pulsa-navbar-right">
+        <a href="#" class="pulsa-btn pulsa-btn-ghost pulsa-btn-sm">Connexion</a>
+        <a href="#" class="pulsa-btn pulsa-btn-primary pulsa-btn-sm">Inscription</a>
+      </div>
+    </nav>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;nav class="pulsa-navbar pulsa-navbar-fixed pulsa-navbar-blur"&gt;
+  &lt;a href="/" class="pulsa-navbar-brand"&gt;
+    &lt;img class="pulsa-navbar-brand-logo" src="logo.png"/&gt;
+    MonApp
+  &lt;/a&gt;
+  &lt;ul class="pulsa-navbar-nav"&gt;
+    &lt;li&gt;&lt;a href="/" class="pulsa-navbar-link active"&gt;Accueil&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/blog" class="pulsa-navbar-link"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class="pulsa-navbar-right"&gt;
+    &lt;a class="pulsa-btn pulsa-btn-primary"&gt;CTA&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+&lt;!-- Variants: .pulsa-navbar-fixed | .pulsa-navbar-sticky | .pulsa-navbar-blur --&gt;</code></pre></div>
+</section>
+
+<!-- HERO VARIANTS -->
+<section class="sec" id="hero-sec">
+  <h2 class="sec-h">Hero — 5 styles</h2>
+  <div class="sub"><h3 class="sub-h">Hero centré (défaut)</h3>
+  <div class="demo p0">
+    <div class="pulsa-hero" style="padding:2.5rem 1.5rem;background:var(--bg-secondary)">
+      <p class="pulsa-hero-badge"><span class="pulsa-hero-badge-new">Nouveau</span>Version 2.0 disponible →</p>
+      <h1 class="pulsa-hero-title">Créez des interfaces <span class="pulsa-hero-gradient">exceptionnelles</span></h1>
+      <p class="pulsa-hero-sub">Framework CSS sombre & thémable. Composants prêts à l'emploi pour n'importe quel projet.</p>
+      <div class="pulsa-hero-actions">
+        <a href="#" class="pulsa-btn pulsa-btn-primary pulsa-btn-lg pulsa-btn-pill">Démarrer gratuitement</a>
+        <a href="#" class="pulsa-btn pulsa-btn-secondary pulsa-btn-lg pulsa-btn-pill">Voir la démo</a>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;section class="pulsa-hero"&gt;
+  &lt;p class="pulsa-hero-badge"&gt;
+    &lt;span class="pulsa-hero-badge-new"&gt;Nouveau&lt;/span&gt;
+    Version 2.0 →
+  &lt;/p&gt;
+  &lt;h1 class="pulsa-hero-title"&gt;
+    Titre avec &lt;span class="pulsa-hero-gradient"&gt;dégradé&lt;/span&gt;
+  &lt;/h1&gt;
+  &lt;p class="pulsa-hero-sub"&gt;Sous-titre de hero…&lt;/p&gt;
+  &lt;div class="pulsa-hero-actions"&gt;
+    &lt;a href="#" class="pulsa-btn pulsa-btn-primary pulsa-btn-lg"&gt;CTA&lt;/a&gt;
+    &lt;a href="#" class="pulsa-btn pulsa-btn-secondary pulsa-btn-lg"&gt;Démo&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre></div></div>
+
+  <div class="sub"><h3 class="sub-h">Hero minimal (grand titre)</h3>
+  <div class="demo p0">
+    <div class="pulsa-hero-minimal" style="padding:2.5rem 1.5rem;background:var(--bg-secondary)">
+      <span class="pulsa-overline">Design System</span>
+      <h1 class="pulsa-hero-title" style="font-size:2.5rem;letter-spacing:-.05em">Construire<br>le futur</h1>
+      <p class="pulsa-hero-sub">Interfaces minimalistes et élégantes.</p>
+      <a href="#" class="pulsa-btn pulsa-btn-primary">Explorer →</a>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;section class="pulsa-hero-minimal"&gt;
+  &lt;span class="pulsa-overline"&gt;Catégorie&lt;/span&gt;
+  &lt;h1 class="pulsa-hero-title"&gt;Grand titre&lt;/h1&gt;
+  &lt;p class="pulsa-hero-sub"&gt;Sous-titre…&lt;/p&gt;
+&lt;/section&gt;</code></pre></div></div>
+</section>
+
+<!-- FEATURE SECTION -->
+<section class="sec" id="features">
+  <h2 class="sec-h">Section Features</h2>
+  <div class="sub"><h3 class="sub-h">Grille 3 colonnes</h3>
+  <div class="demo col">
+    <div class="pulsa-section-header" style="margin-bottom:1.5rem">
+      <p class="pulsa-section-eyebrow">Pourquoi Pulsa</p>
+      <h2 class="pulsa-section-title">Tout ce dont tu as besoin</h2>
+      <p class="pulsa-section-desc">Un framework complet, thémable et sans dépendance.</p>
+    </div>
+    <div class="pulsa-grid-3" style="width:100%">
+      <div class="pulsa-card" style="padding:1.5rem">
+        <div class="pulsa-feature-icon">⚡</div>
+        <p class="pulsa-feature-title">Ultra rapide</p>
+        <p class="pulsa-feature-desc">CSS pur, zéro JavaScript. Performances maximales.</p>
+        <a href="#" class="pulsa-feature-link">En savoir plus</a>
+      </div>
+      <div class="pulsa-card" style="padding:1.5rem">
+        <div class="pulsa-feature-icon" style="background:var(--success-soft);color:var(--success)">🎨</div>
+        <p class="pulsa-feature-title">Thémable</p>
+        <p class="pulsa-feature-desc">6 couleurs d'accent, mode sombre & clair.</p>
+        <a href="#" class="pulsa-feature-link">En savoir plus</a>
+      </div>
+      <div class="pulsa-card" style="padding:1.5rem">
+        <div class="pulsa-feature-icon" style="background:rgba(234,179,8,.15);color:var(--warning)">📦</div>
+        <p class="pulsa-feature-title">500+ composants</p>
+        <p class="pulsa-feature-desc">Boutons, cards, sections, formulaires, animations…</p>
+        <a href="#" class="pulsa-feature-link">En savoir plus</a>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="sub"><h3 class="sub-h">Feature rows (icône + texte)</h3>
+  <div class="demo col" style="gap:1rem">
+    <div class="pulsa-feature-row">
+      <div class="pulsa-feature-icon pulsa-feature-icon-circle" style="flex-shrink:0">🔒</div>
+      <div><p class="pulsa-feature-title" style="margin-bottom:.25rem">Sécurisé par défaut</p><p class="pulsa-feature-desc">Variables CSS isolées avec préfixe pulsa-. Aucun conflit possible.</p></div>
+    </div>
+    <div class="pulsa-feature-row">
+      <div class="pulsa-feature-icon pulsa-feature-icon-circle" style="flex-shrink:0;background:var(--success-soft);color:var(--success)">♿</div>
+      <div><p class="pulsa-feature-title" style="margin-bottom:.25rem">Accessible</p><p class="pulsa-feature-desc">Contrastes WCAG, focus visible, rôles ARIA dans les exemples.</p></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-feature-row"&gt;
+  &lt;div class="pulsa-feature-icon pulsa-feature-icon-circle"&gt;⚡&lt;/div&gt;
+  &lt;div&gt;
+    &lt;p class="pulsa-feature-title"&gt;Titre&lt;/p&gt;
+    &lt;p class="pulsa-feature-desc"&gt;Description…&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div>
+</section>
+
+<!-- BLOG CARDS -->
+<section class="sec" id="blog-cards">
+  <h2 class="sec-h">Cards Blog / Article</h2>
+  <div class="sub"><h3 class="sub-h">Cards verticales (défaut)</h3>
+  <div class="demo p0" style="padding:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-grid-3" style="width:100%">
+      <div class="pulsa-blog-card">
+        <div class="pulsa-blog-card-img" style="background:linear-gradient(135deg,var(--accent-soft),var(--bg-elevated))">
+          <span class="pulsa-blog-card-category"><span class="pulsa-badge pulsa-badge-accent">Design</span></span>
+        </div>
+        <div class="pulsa-blog-card-body">
+          <div class="pulsa-blog-card-meta"><span>Mar 2026</span><span class="pulsa-blog-card-meta-dot"></span><span>5 min</span></div>
+          <a href="#" class="pulsa-blog-card-title">Comment créer un design system efficace</a>
+          <p class="pulsa-blog-card-excerpt">Les tokens, les composants atomiques et la documentation — tout ce qu'il faut.</p>
+        </div>
+        <div class="pulsa-blog-card-footer">
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:var(--text-xs);color:var(--text-muted)">
+            <div class="pulsa-avatar pulsa-avatar-xs" style="background:var(--accent-soft);color:var(--accent)">J</div>
+            Jean D.
+          </div>
+          <a href="#" class="pulsa-btn pulsa-btn-ghost" style="font-size:var(--text-xs);padding:.25rem .625rem">Lire →</a>
+        </div>
+      </div>
+      <div class="pulsa-blog-card">
+        <div class="pulsa-blog-card-img" style="background:linear-gradient(135deg,rgba(34,197,94,.2),var(--bg-elevated))">
+          <span class="pulsa-blog-card-category"><span class="pulsa-badge pulsa-badge-success">Tech</span></span>
+        </div>
+        <div class="pulsa-blog-card-body">
+          <div class="pulsa-blog-card-meta"><span>Fév 2026</span><span class="pulsa-blog-card-meta-dot"></span><span>8 min</span></div>
+          <a href="#" class="pulsa-blog-card-title">CSS Variables avancées : theming dynamique</a>
+          <p class="pulsa-blog-card-excerpt">Maîtrisez les custom properties pour des thèmes flexibles en 2026.</p>
+        </div>
+        <div class="pulsa-blog-card-footer">
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:var(--text-xs);color:var(--text-muted)">
+            <div class="pulsa-avatar pulsa-avatar-xs" style="background:var(--success-soft);color:var(--success)">M</div>
+            Marie L.
+          </div>
+          <a href="#" class="pulsa-btn pulsa-btn-ghost" style="font-size:var(--text-xs);padding:.25rem .625rem">Lire →</a>
+        </div>
+      </div>
+      <div class="pulsa-blog-card">
+        <div class="pulsa-blog-card-img" style="background:linear-gradient(135deg,rgba(249,115,22,.2),var(--bg-elevated))">
+          <span class="pulsa-blog-card-category"><span class="pulsa-badge pulsa-badge-warning">UX</span></span>
+        </div>
+        <div class="pulsa-blog-card-body">
+          <div class="pulsa-blog-card-meta"><span>Jan 2026</span><span class="pulsa-blog-card-meta-dot"></span><span>3 min</span></div>
+          <a href="#" class="pulsa-blog-card-title">Dark mode : pièges à éviter</a>
+          <p class="pulsa-blog-card-excerpt">Contraste, couleurs adaptatives et accessibilité dans les thèmes sombres.</p>
+        </div>
+        <div class="pulsa-blog-card-footer">
+          <div style="display:flex;align-items:center;gap:.5rem;font-size:var(--text-xs);color:var(--text-muted)">
+            <div class="pulsa-avatar pulsa-avatar-xs" style="background:rgba(249,115,22,.2);color:var(--warning)">S</div>
+            Sam R.
+          </div>
+          <a href="#" class="pulsa-btn pulsa-btn-ghost" style="font-size:var(--text-xs);padding:.25rem .625rem">Lire →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-blog-card"&gt;
+  &lt;div class="pulsa-blog-card-img"&gt;
+    &lt;img src="cover.jpg" alt=""/&gt;
+    &lt;span class="pulsa-blog-card-category"&gt;
+      &lt;span class="pulsa-badge pulsa-badge-accent"&gt;Design&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-blog-card-body"&gt;
+    &lt;div class="pulsa-blog-card-meta"&gt;
+      &lt;span&gt;Mar 2026&lt;/span&gt;
+      &lt;span class="pulsa-blog-card-meta-dot"&gt;&lt;/span&gt;
+      &lt;span&gt;5 min de lecture&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;a href="#" class="pulsa-blog-card-title"&gt;Titre de l'article&lt;/a&gt;
+    &lt;p class="pulsa-blog-card-excerpt"&gt;Extrait…&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-blog-card-footer"&gt;
+    &lt;span&gt;Auteur&lt;/span&gt;
+    &lt;a href="#" class="pulsa-btn pulsa-btn-ghost"&gt;Lire →&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-blog-card-h = horizontal | .pulsa-blog-card-featured = featured --&gt;</code></pre></div></div>
+</section>
+
+<!-- PRODUCT CARDS -->
+<section class="sec" id="product-cards">
+  <h2 class="sec-h">E-commerce Cards</h2>
+  <div class="demo p0" style="padding:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-grid-3" style="width:100%">
+      <div class="pulsa-product-card">
+        <div class="pulsa-product-img" style="background:linear-gradient(135deg,var(--accent-soft),var(--bg-elevated))">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem">👟</div>
+          <div class="pulsa-product-badge"><span class="pulsa-badge pulsa-badge-danger">-20%</span></div>
+          <div class="pulsa-product-actions">
+            <button class="pulsa-product-action-btn" title="Favoris">♥</button>
+            <button class="pulsa-product-action-btn" title="Aperçu">👁</button>
+          </div>
+        </div>
+        <div class="pulsa-product-body">
+          <span class="pulsa-product-brand">Nike</span>
+          <span class="pulsa-product-name">Air Max 270 React ENG Mesh</span>
+          <div class="pulsa-product-price-row">
+            <span class="pulsa-product-price">79,90€</span>
+            <span class="pulsa-product-price-old">99,90€</span>
+            <span class="pulsa-product-discount">-20%</span>
+          </div>
+          <div class="pulsa-stock pulsa-stock-in"><span class="pulsa-stock-dot"></span>En stock</div>
+        </div>
+        <div class="pulsa-product-footer">
+          <button class="pulsa-btn pulsa-btn-primary" style="flex:1">Ajouter au panier</button>
+        </div>
+      </div>
+      <div class="pulsa-product-card">
+        <div class="pulsa-product-img" style="background:linear-gradient(135deg,var(--success-soft),var(--bg-elevated))">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem">🎧</div>
+          <div class="pulsa-product-actions">
+            <button class="pulsa-product-action-btn">♥</button>
+          </div>
+        </div>
+        <div class="pulsa-product-body">
+          <span class="pulsa-product-brand">Sony</span>
+          <span class="pulsa-product-name">WH-1000XM5 Casque sans fil</span>
+          <div class="pulsa-product-price-row"><span class="pulsa-product-price">299€</span></div>
+          <div class="pulsa-stock pulsa-stock-low"><span class="pulsa-stock-dot"></span>Stock faible</div>
+        </div>
+        <div class="pulsa-product-footer">
+          <button class="pulsa-btn pulsa-btn-primary" style="flex:1">Acheter</button>
+        </div>
+      </div>
+      <div class="pulsa-product-card">
+        <div class="pulsa-product-img" style="background:linear-gradient(135deg,rgba(249,115,22,.15),var(--bg-elevated))">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem">📷</div>
+          <div class="pulsa-product-actions">
+            <button class="pulsa-product-action-btn">♥</button>
+          </div>
+        </div>
+        <div class="pulsa-product-body">
+          <span class="pulsa-product-brand">Canon</span>
+          <span class="pulsa-product-name">EOS R50 Appareil hybride 24MP</span>
+          <div class="pulsa-product-price-row"><span class="pulsa-product-price">749€</span></div>
+          <div class="pulsa-stock pulsa-stock-out"><span class="pulsa-stock-dot"></span>Rupture de stock</div>
+        </div>
+        <div class="pulsa-product-footer">
+          <button class="pulsa-btn pulsa-btn-secondary" style="flex:1" disabled>Indisponible</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-product-card"&gt;
+  &lt;div class="pulsa-product-img"&gt;
+    &lt;img src="product.jpg" alt=""/&gt;
+    &lt;div class="pulsa-product-badge"&gt;
+      &lt;span class="pulsa-badge pulsa-badge-danger"&gt;-20%&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="pulsa-product-actions"&gt;
+      &lt;button class="pulsa-product-action-btn"&gt;♥&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-product-body"&gt;
+    &lt;span class="pulsa-product-brand"&gt;Nike&lt;/span&gt;
+    &lt;span class="pulsa-product-name"&gt;Air Max 270&lt;/span&gt;
+    &lt;div class="pulsa-product-price-row"&gt;
+      &lt;span class="pulsa-product-price"&gt;79,90€&lt;/span&gt;
+      &lt;span class="pulsa-product-price-old"&gt;99,90€&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="pulsa-stock pulsa-stock-in"&gt;&lt;span class="pulsa-stock-dot"&gt;&lt;/span&gt;En stock&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-product-footer"&gt;
+    &lt;button class="pulsa-btn pulsa-btn-primary"&gt;Ajouter&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-stock-in | .pulsa-stock-low | .pulsa-stock-out --&gt;</code></pre></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="testimonial-cards">
+  <h2 class="sec-h">Témoignages</h2>
+  <div class="demo p0" style="padding:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-grid-3" style="width:100%">
+      <div class="pulsa-testimonial">
+        <div class="pulsa-testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="pulsa-testimonial-quote-icon">"</p>
+        <p class="pulsa-testimonial-text">Pulsa CSS m'a permis de lancer mon SaaS en 2 semaines. Les composants sont superbes et le dark mode est parfait.</p>
+        <div class="pulsa-testimonial-footer">
+          <div class="pulsa-testimonial-avatar" style="background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700">A</div>
+          <div><p class="pulsa-testimonial-name">Alice Martin</p><p class="pulsa-testimonial-role">CTO @ Startup.io</p></div>
+        </div>
+      </div>
+      <div class="pulsa-testimonial">
+        <div class="pulsa-testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="pulsa-testimonial-quote-icon">"</p>
+        <p class="pulsa-testimonial-text">Le meilleur framework CSS sombre que j'ai utilisé. Les animations sont élégantes et la documentation est claire.</p>
+        <div class="pulsa-testimonial-footer">
+          <div class="pulsa-testimonial-avatar" style="background:var(--success-soft);display:flex;align-items:center;justify-content:center;color:var(--success);font-weight:700">B</div>
+          <div><p class="pulsa-testimonial-name">Bob Chen</p><p class="pulsa-testimonial-role">Lead Dev @ Agency</p></div>
+        </div>
+      </div>
+      <div class="pulsa-testimonial">
+        <div class="pulsa-testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <p class="pulsa-testimonial-quote-icon">"</p>
+        <p class="pulsa-testimonial-text">Zéro dépendance JavaScript, 500+ composants. C'est exactement ce que je cherchais pour mes projets clients.</p>
+        <div class="pulsa-testimonial-footer">
+          <div class="pulsa-testimonial-avatar" style="background:rgba(249,115,22,.15);display:flex;align-items:center;justify-content:center;color:var(--warning);font-weight:700">S</div>
+          <div><p class="pulsa-testimonial-name">Sara Dupont</p><p class="pulsa-testimonial-role">Freelance Designer</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-testimonial"&gt;
+  &lt;div class="pulsa-testimonial-stars"&gt;⭐⭐⭐⭐⭐&lt;/div&gt;
+  &lt;p class="pulsa-testimonial-quote-icon"&gt;"&lt;/p&gt;
+  &lt;p class="pulsa-testimonial-text"&gt;Avis client…&lt;/p&gt;
+  &lt;div class="pulsa-testimonial-footer"&gt;
+    &lt;img class="pulsa-testimonial-avatar" src="avatar.jpg"/&gt;
+    &lt;div&gt;
+      &lt;p class="pulsa-testimonial-name"&gt;Prénom Nom&lt;/p&gt;
+      &lt;p class="pulsa-testimonial-role"&gt;Rôle @ Entreprise&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-testimonial-lg = version large --&gt;</code></pre></div>
+</section>
+
+<!-- TEAM CARDS -->
+<section class="sec" id="team-cards">
+  <h2 class="sec-h">Cards Équipe</h2>
+  <div class="demo p0" style="padding:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-grid-4" style="width:100%">
+      <div class="pulsa-team-card">
+        <div class="pulsa-team-avatar" style="background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:2rem">J</div>
+        <p class="pulsa-team-name">Jean Dupont</p>
+        <p class="pulsa-team-role">CEO & Co-founder</p>
+        <p class="pulsa-team-bio">Passionné de design systems et d'accessibilité web depuis 10 ans.</p>
+        <div class="pulsa-team-links"><a href="#" class="pulsa-social-link" style="width:28px;height:28px;font-size:.75rem">in</a><a href="#" class="pulsa-social-link" style="width:28px;height:28px;font-size:.75rem">🐦</a></div>
+      </div>
+      <div class="pulsa-team-card">
+        <div class="pulsa-team-avatar" style="background:var(--success-soft);display:flex;align-items:center;justify-content:center;color:var(--success);font-size:2rem">M</div>
+        <p class="pulsa-team-name">Marie Lambert</p>
+        <p class="pulsa-team-role" style="color:var(--success)">Lead Designer</p>
+        <p class="pulsa-team-bio">Spécialisée en UX/UI et design de systèmes complexes.</p>
+        <div class="pulsa-team-links"><a href="#" class="pulsa-social-link" style="width:28px;height:28px;font-size:.75rem">🎨</a></div>
+      </div>
+      <div class="pulsa-team-card">
+        <div class="pulsa-team-avatar" style="background:rgba(249,115,22,.15);display:flex;align-items:center;justify-content:center;color:var(--warning);font-size:2rem">S</div>
+        <p class="pulsa-team-name">Sam Rivera</p>
+        <p class="pulsa-team-role" style="color:var(--warning)">Senior Dev</p>
+        <p class="pulsa-team-bio">Expert CSS, performance web et animations fluides.</p>
+        <div class="pulsa-team-links"><a href="#" class="pulsa-social-link" style="width:28px;height:28px;font-size:.75rem">🐙</a></div>
+      </div>
+      <div class="pulsa-team-card">
+        <div class="pulsa-team-avatar" style="background:rgba(139,92,246,.15);display:flex;align-items:center;justify-content:center;color:#8b5cf6;font-size:2rem">L</div>
+        <p class="pulsa-team-name">Lisa Chen</p>
+        <p class="pulsa-team-role" style="color:#8b5cf6">Product Manager</p>
+        <p class="pulsa-team-bio">Vision produit et stratégie de croissance pour SaaS.</p>
+        <div class="pulsa-team-links"><a href="#" class="pulsa-social-link" style="width:28px;height:28px;font-size:.75rem">in</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-team-card"&gt;
+  &lt;div class="pulsa-team-avatar"&gt;&lt;img src="photo.jpg"/&gt;&lt;/div&gt;
+  &lt;p class="pulsa-team-name"&gt;Jean Dupont&lt;/p&gt;
+  &lt;p class="pulsa-team-role"&gt;CEO&lt;/p&gt;
+  &lt;p class="pulsa-team-bio"&gt;Biographie courte…&lt;/p&gt;
+  &lt;div class="pulsa-team-links"&gt;
+    &lt;a href="#" class="pulsa-social-link"&gt;in&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing-sec">
+  <h2 class="sec-h">Section Pricing</h2>
+  <div class="demo p0" style="padding:1.5rem;background:var(--bg-secondary)">
+    <div class="pulsa-grid-3" style="width:100%;max-width:720px;margin:0 auto">
+      <div class="pulsa-card pulsa-pricing-card">
+        <p class="pulsa-pricing-name">Starter</p>
+        <p class="pulsa-pricing-price">0€</p>
+        <p class="pulsa-pricing-period">pour toujours</p>
+        <ul class="pulsa-pricing-features">
+          <li class="pulsa-pricing-feature">3 projets</li>
+          <li class="pulsa-pricing-feature">1 GB stockage</li>
+          <li class="pulsa-pricing-feature excluded">Support prioritaire</li>
+          <li class="pulsa-pricing-feature excluded">Domaine custom</li>
+        </ul>
+        <button class="pulsa-btn pulsa-btn-secondary" style="width:100%">Commencer</button>
+      </div>
+      <div class="pulsa-card pulsa-pricing-card pulsa-pricing-featured">
+        <span class="pulsa-pricing-featured-badge">Le plus populaire</span>
+        <p class="pulsa-pricing-name">Pro</p>
+        <p class="pulsa-pricing-price">19€</p>
+        <p class="pulsa-pricing-period">par mois, facturé annuellement</p>
+        <ul class="pulsa-pricing-features">
+          <li class="pulsa-pricing-feature">Projets illimités</li>
+          <li class="pulsa-pricing-feature">50 GB stockage</li>
+          <li class="pulsa-pricing-feature">Support prioritaire</li>
+          <li class="pulsa-pricing-feature excluded">Domaine custom</li>
+        </ul>
+        <button class="pulsa-btn pulsa-btn-primary" style="width:100%">Choisir Pro</button>
+      </div>
+      <div class="pulsa-card pulsa-pricing-card">
+        <p class="pulsa-pricing-name">Enterprise</p>
+        <p class="pulsa-pricing-price">49€</p>
+        <p class="pulsa-pricing-period">par mois</p>
+        <ul class="pulsa-pricing-features">
+          <li class="pulsa-pricing-feature">Tout en Pro</li>
+          <li class="pulsa-pricing-feature">Stockage illimité</li>
+          <li class="pulsa-pricing-feature">Support dédié 24/7</li>
+          <li class="pulsa-pricing-feature">Domaine custom</li>
+        </ul>
+        <button class="pulsa-btn pulsa-btn-secondary" style="width:100%">Nous contacter</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec" id="cta-sec">
+  <h2 class="sec-h">CTA Blocks</h2>
+  <div class="sub"><h3 class="sub-h">CTA centré</h3>
+  <div class="demo p0" style="padding:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-cta" style="width:100%">
+      <h2 class="pulsa-cta-title">Prêt à démarrer ?</h2>
+      <p class="pulsa-cta-desc">Rejoins 10 000+ développeurs qui construisent avec Pulsa CSS.</p>
+      <div class="pulsa-cta-actions">
+        <button class="pulsa-btn pulsa-btn-primary pulsa-btn-lg pulsa-btn-pill">Démarrer gratuitement</button>
+        <button class="pulsa-btn pulsa-btn-secondary pulsa-btn-lg pulsa-btn-pill">Voir la démo</button>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-cta"&gt;
+  &lt;h2 class="pulsa-cta-title"&gt;Prêt à démarrer ?&lt;/h2&gt;
+  &lt;p class="pulsa-cta-desc"&gt;Description…&lt;/p&gt;
+  &lt;div class="pulsa-cta-actions"&gt;
+    &lt;button class="pulsa-btn pulsa-btn-primary"&gt;Action principale&lt;/button&gt;
+    &lt;button class="pulsa-btn pulsa-btn-secondary"&gt;Secondaire&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Variante : .pulsa-cta-gradient (fond dégradé accent) --&gt;
+&lt;!-- Variante inline : .pulsa-cta + .pulsa-cta-inline --&gt;</code></pre></div></div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq-sec">
+  <h2 class="sec-h">FAQ Accordion</h2>
+  <div class="demo p0" style="padding:1.5rem;background:var(--bg-secondary)">
+    <div class="pulsa-faq" style="max-width:640px;width:100%;margin:0 auto">
+      <div class="pulsa-faq-item open">
+        <button class="pulsa-faq-question">Pulsa CSS est-il gratuit ?<span class="pulsa-faq-chevron">▾</span></button>
+        <div class="pulsa-faq-answer">Oui, Pulsa CSS est open source et gratuit pour tout usage personnel ou commercial. Licence MIT.</div>
+      </div>
+      <div class="pulsa-faq-item">
+        <button class="pulsa-faq-question">Compatible avec React/Vue/Angular ?<span class="pulsa-faq-chevron">▾</span></button>
+        <div class="pulsa-faq-answer">Pulsa est du CSS pur. Il fonctionne avec n'importe quel framework JS ou HTML statique.</div>
+      </div>
+      <div class="pulsa-faq-item">
+        <button class="pulsa-faq-question">Comment changer l'accent couleur ?<span class="pulsa-faq-chevron">▾</span></button>
+        <div class="pulsa-faq-answer">Ajoute <code class="pulsa-code-inline">data-accent="purple"</code> sur le tag HTML. Valeurs : rose, purple, blue, green, orange, pink.</div>
+      </div>
+      <div class="pulsa-faq-item">
+        <button class="pulsa-faq-question">Puis-je customiser les variables CSS ?<span class="pulsa-faq-chevron">▾</span></button>
+        <div class="pulsa-faq-answer">Absolument. Toutes les valeurs sont dans <code class="pulsa-code-inline">pulsa-tokens.css</code>. Surcharge la variable dans ton propre CSS.</div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-faq"&gt;
+  &lt;div class="pulsa-faq-item open"&gt; &lt;!-- open = ouvert par défaut --&gt;
+    &lt;button class="pulsa-faq-question"&gt;
+      Question ?
+      &lt;span class="pulsa-faq-chevron"&gt;▾&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="pulsa-faq-answer"&gt;Réponse…&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="sec" id="stats-sec">
+  <h2 class="sec-h">Statistiques</h2>
+  <div class="demo p0" style="background:var(--bg-secondary);padding:1.5rem">
+    <div class="pulsa-stats-centered" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg)">
+      <div class="pulsa-stat-block"><div class="pulsa-stat-block-divider"></div><span class="pulsa-stat-block-value">500+</span><span class="pulsa-stat-block-label">Composants</span></div>
+      <div class="pulsa-stat-block"><div class="pulsa-stat-block-divider"></div><span class="pulsa-stat-block-value">10k+</span><span class="pulsa-stat-block-label">Utilisateurs</span></div>
+      <div class="pulsa-stat-block"><div class="pulsa-stat-block-divider"></div><span class="pulsa-stat-block-value">6</span><span class="pulsa-stat-block-label">Thèmes accent</span></div>
+      <div class="pulsa-stat-block"><div class="pulsa-stat-block-divider"></div><span class="pulsa-stat-block-value">0</span><span class="pulsa-stat-block-label">Dépendances JS</span></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-stats-centered"&gt;
+  &lt;div class="pulsa-stat-block"&gt;
+    &lt;div class="pulsa-stat-block-divider"&gt;&lt;/div&gt;
+    &lt;span class="pulsa-stat-block-value"&gt;500+&lt;/span&gt;
+    &lt;span class="pulsa-stat-block-label"&gt;Composants&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-stats-grid = grille sans bordures --&gt;</code></pre></div>
+</section>
+
+<!-- LOGO CLOUD -->
+<section class="sec" id="logo-cloud">
+  <h2 class="sec-h">Logo Cloud</h2>
+  <div class="demo c" style="flex-wrap:wrap;gap:1rem;background:var(--bg-secondary)">
+    <div class="pulsa-logo-cloud" style="width:100%;justify-content:center">
+      <div class="pulsa-logo-placeholder">Vercel</div>
+      <div class="pulsa-logo-placeholder">Stripe</div>
+      <div class="pulsa-logo-placeholder">Supabase</div>
+      <div class="pulsa-logo-placeholder">GitHub</div>
+      <div class="pulsa-logo-placeholder">Figma</div>
+      <div class="pulsa-logo-placeholder">Linear</div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-logo-cloud"&gt;
+  &lt;div class="pulsa-logo-cloud-item"&gt;
+    &lt;img src="logo.svg" alt="Partenaire"/&gt;
+  &lt;/div&gt;
+  &lt;!-- ou placeholder texte --&gt;
+  &lt;div class="pulsa-logo-placeholder"&gt;Stripe&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- AUTH -->
+<section class="sec" id="forms-adv">
+  <h2 class="sec-h">Formulaires avancés</h2>
+  <div class="sub"><h3 class="sub-h">Login Card</h3>
+  <div class="demo c">
+    <div class="pulsa-auth-card" style="max-width:380px;width:100%">
+      <div class="pulsa-auth-header">
+        <div class="pulsa-auth-logo">⚡</div>
+        <p class="pulsa-auth-title">Connexion</p>
+        <p class="pulsa-auth-sub">Content de te revoir !</p>
+      </div>
+      <div class="pulsa-auth-oauth">
+        <button class="pulsa-oauth-btn">🐙 Continuer avec GitHub</button>
+        <button class="pulsa-oauth-btn">🔵 Continuer avec Google</button>
+      </div>
+      <div class="pulsa-auth-divider"><span>ou</span></div>
+      <div class="pulsa-auth-form">
+        <div class="pulsa-field"><label class="pulsa-field-label">Email</label><input class="pulsa-input" type="email" placeholder="jean@exemple.fr"/></div>
+        <div class="pulsa-field"><label class="pulsa-field-label">Mot de passe</label><input class="pulsa-input" type="password" placeholder="••••••••"/></div>
+        <button class="pulsa-btn pulsa-btn-primary" style="width:100%">Se connecter</button>
+      </div>
+      <p class="pulsa-auth-footer">Pas encore de compte ? <a href="#" style="color:var(--accent)">S'inscrire</a></p>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-auth-card"&gt;
+  &lt;div class="pulsa-auth-header"&gt;
+    &lt;div class="pulsa-auth-logo"&gt;⚡&lt;/div&gt;
+    &lt;p class="pulsa-auth-title"&gt;Connexion&lt;/p&gt;
+    &lt;p class="pulsa-auth-sub"&gt;Sous-titre&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-auth-oauth"&gt;
+    &lt;button class="pulsa-oauth-btn"&gt;🐙 GitHub&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-auth-divider"&gt;&lt;span&gt;ou&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="pulsa-auth-form"&gt;
+    &lt;div class="pulsa-field"&gt;…&lt;/div&gt;
+    &lt;button class="pulsa-btn pulsa-btn-primary"&gt;Se connecter&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div>
+
+  <div class="sub" id="file-drop"><h3 class="sub-h">File Drop Zone</h3>
+  <div class="demo col">
+    <div class="pulsa-file-drop" style="width:100%">
+      <div class="pulsa-file-drop-icon">📁</div>
+      <p class="pulsa-file-drop-label">Dépose tes fichiers ici</p>
+      <p class="pulsa-file-drop-sub">PNG, JPG, PDF — max 10 MB</p>
+      <button class="pulsa-btn pulsa-btn-secondary pulsa-btn-sm">Parcourir</button>
+      <input type="file" multiple/>
+    </div>
+    <div class="pulsa-file-list" style="width:100%">
+      <div class="pulsa-file-item"><span class="pulsa-file-item-icon">🖼</span><span class="pulsa-file-item-name">photo-profil.png</span><span class="pulsa-file-item-size">248 KB</span><button class="pulsa-file-item-remove">✕</button></div>
+      <div class="pulsa-file-item"><span class="pulsa-file-item-icon">📄</span><span class="pulsa-file-item-name">rapport-annuel-2026.pdf</span><span class="pulsa-file-item-size">2.3 MB</span><button class="pulsa-file-item-remove">✕</button></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-file-drop"&gt;
+  &lt;div class="pulsa-file-drop-icon"&gt;📁&lt;/div&gt;
+  &lt;p class="pulsa-file-drop-label"&gt;Dépose ici&lt;/p&gt;
+  &lt;p class="pulsa-file-drop-sub"&gt;PNG, PDF — 10MB max&lt;/p&gt;
+  &lt;input type="file" multiple/&gt;
+&lt;/div&gt;
+&lt;div class="pulsa-file-list"&gt;
+  &lt;div class="pulsa-file-item"&gt;
+    &lt;span class="pulsa-file-item-icon"&gt;📄&lt;/span&gt;
+    &lt;span class="pulsa-file-item-name"&gt;fichier.pdf&lt;/span&gt;
+    &lt;span class="pulsa-file-item-size"&gt;2 MB&lt;/span&gt;
+    &lt;button class="pulsa-file-item-remove"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div>
+
+  <div class="sub" id="tag-input"><h3 class="sub-h">Tag Input</h3>
+  <div class="demo col">
+    <div class="pulsa-tag-input-wrap" style="width:100%">
+      <span class="pulsa-tag-token">css <button class="pulsa-tag-token-remove">✕</button></span>
+      <span class="pulsa-tag-token">design-system <button class="pulsa-tag-token-remove">✕</button></span>
+      <span class="pulsa-tag-token">dark-mode <button class="pulsa-tag-token-remove">✕</button></span>
+      <input placeholder="Ajouter un tag…"/>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-tag-input-wrap"&gt;
+  &lt;span class="pulsa-tag-token"&gt;
+    css &lt;button class="pulsa-tag-token-remove"&gt;✕&lt;/button&gt;
+  &lt;/span&gt;
+  &lt;input placeholder="Ajouter un tag…"/&gt;
+&lt;/div&gt;</code></pre></div></div>
+
+  <div class="sub" id="pw-strength"><h3 class="sub-h">Password Strength</h3>
+  <div class="demo col">
+    <div style="width:100%">
+      <div class="pulsa-field"><label class="pulsa-field-label">Mot de passe</label><input class="pulsa-input" type="password" value="MonMotDePasse123!"/></div>
+      <div class="pulsa-pw-strength">
+        <div class="pulsa-pw-bars"><div class="pulsa-pw-bar filled"></div><div class="pulsa-pw-bar filled medium"></div><div class="pulsa-pw-bar filled"></div><div class="pulsa-pw-bar"></div></div>
+        <span class="pulsa-pw-label">Moyen — Ajoute un symbole pour plus de sécurité</span>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-pw-strength"&gt;
+  &lt;div class="pulsa-pw-bars"&gt;
+    &lt;div class="pulsa-pw-bar filled"&gt;&lt;/div&gt;       &lt;!-- vert --&gt;
+    &lt;div class="pulsa-pw-bar filled medium"&gt;&lt;/div&gt; &lt;!-- orange --&gt;
+    &lt;div class="pulsa-pw-bar filled weak"&gt;&lt;/div&gt;   &lt;!-- rouge --&gt;
+    &lt;div class="pulsa-pw-bar"&gt;&lt;/div&gt;               &lt;!-- vide --&gt;
+  &lt;/div&gt;
+  &lt;span class="pulsa-pw-label"&gt;Moyen&lt;/span&gt;
+&lt;/div&gt;</code></pre></div></div>
+
+  <div class="sub" id="number-input"><h3 class="sub-h">Number Input +/-</h3>
+  <div class="demo">
+    <div class="pulsa-number-input">
+      <button class="pulsa-number-btn">−</button>
+      <input class="pulsa-input" type="number" value="3" style="width:64px"/>
+      <button class="pulsa-number-btn">+</button>
+    </div>
+    <div class="pulsa-number-input">
+      <button class="pulsa-number-btn">−</button>
+      <input class="pulsa-input" type="number" value="12" style="width:64px"/>
+      <button class="pulsa-number-btn">+</button>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-number-input"&gt;
+  &lt;button class="pulsa-number-btn"&gt;−&lt;/button&gt;
+  &lt;input class="pulsa-input" type="number" value="1"/&gt;
+  &lt;button class="pulsa-number-btn"&gt;+&lt;/button&gt;
+&lt;/div&gt;</code></pre></div></div>
+
+  <div class="sub" id="wizard"><h3 class="sub-h">Form Wizard / Stepper</h3>
+  <div class="demo col">
+    <div class="pulsa-wizard-steps" style="width:100%">
+      <div class="pulsa-wizard-step done"><div class="pulsa-wizard-dot">✓</div><span class="pulsa-wizard-label">Compte</span></div>
+      <div class="pulsa-wizard-step done"><div class="pulsa-wizard-dot">✓</div><span class="pulsa-wizard-label">Profil</span></div>
+      <div class="pulsa-wizard-step active"><div class="pulsa-wizard-dot">3</div><span class="pulsa-wizard-label">Paiement</span></div>
+      <div class="pulsa-wizard-step"><div class="pulsa-wizard-dot">4</div><span class="pulsa-wizard-label">Confirmation</span></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-wizard-steps"&gt;
+  &lt;div class="pulsa-wizard-step done"&gt;
+    &lt;div class="pulsa-wizard-dot"&gt;✓&lt;/div&gt;
+    &lt;span class="pulsa-wizard-label"&gt;Compte&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-wizard-step active"&gt;
+    &lt;div class="pulsa-wizard-dot"&gt;2&lt;/div&gt;
+    &lt;span class="pulsa-wizard-label"&gt;Profil&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-wizard-step"&gt;
+    &lt;div class="pulsa-wizard-dot"&gt;3&lt;/div&gt;
+    &lt;span class="pulsa-wizard-label"&gt;Fin&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .done = complété | .active = courant | (rien) = futur --&gt;</code></pre></div></div>
+</section>
+
+<!-- MEDIA -->
+<section class="sec" id="media">
+  <h2 class="sec-h">Galerie & Images</h2>
+  <div class="sub"><h3 class="sub-h">Galerie (grid)</h3>
+  <div class="demo p0" style="padding:1rem">
+    <div class="pulsa-gallery" style="width:100%">
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,var(--accent-soft),var(--bg-elevated))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🌆</div></div>
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,var(--success-soft),var(--bg-elevated))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🌿</div></div>
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,rgba(249,115,22,.2),var(--bg-elevated))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🏔️</div></div>
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,rgba(139,92,246,.2),var(--bg-elevated))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🌊</div></div>
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,rgba(244,63,94,.15),var(--bg-elevated))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🌸</div></div>
+      <div class="pulsa-gallery-item" style="background:linear-gradient(135deg,var(--bg-elevated),var(--bg-card))"><div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem">🌙</div></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-gallery"&gt;           &lt;!-- auto min 180px --&gt;
+  &lt;div class="pulsa-gallery-item"&gt;
+    &lt;img src="photo.jpg" alt=""/&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-gallery-masonry = colonnes CSS --&gt;</code></pre></div></div>
+
+  <div class="sub" id="video"><h3 class="sub-h">Vidéo Responsive</h3>
+  <div class="demo col">
+    <div class="pulsa-video-wrap pulsa-video-16x9" style="width:100%;background:var(--bg-elevated);border-radius:var(--radius)">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;color:var(--text-muted)"><span style="font-size:2.5rem">▶️</span><span style="font-size:var(--text-sm)">iframe YouTube / Vimeo ici</span></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-video-wrap pulsa-video-16x9"&gt;
+  &lt;iframe src="https://youtube.com/embed/…" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-video-16x9 = 16:9 | .pulsa-video-4x3 = 4:3 --&gt;</code></pre></div></div>
+</section>
+
+<!-- CODE BLOCKS -->
+<section class="sec" id="code-blocks">
+  <h2 class="sec-h">Code & Terminal</h2>
+  <div class="demo col" style="gap:1rem">
+    <div class="pulsa-code-block" style="width:100%">
+      <div class="pulsa-code-block-header"><span class="pulsa-code-block-lang">JavaScript</span><button class="pulsa-btn pulsa-btn-ghost" style="font-size:.7rem;padding:.2rem .5rem">Copier</button></div>
+      <pre style="margin:0;padding:1.25rem;background:transparent;font-family:var(--font-mono);font-size:.8rem;color:#e0e0e0;line-height:1.65">import <span style="color:#c792ea">'pulsa-css'</span>;
+
+document.documentElement.dataset.theme = <span style="color:#c3e88d">'dark'</span>;
+document.documentElement.dataset.accent = <span style="color:#c3e88d">'rose'</span>;</pre>
+    </div>
+    <div class="pulsa-terminal" style="width:100%">
+      <div class="pulsa-terminal-header">
+        <div class="pulsa-terminal-dot"></div>
+        <div class="pulsa-terminal-dot"></div>
+        <div class="pulsa-terminal-dot"></div>
+      </div>
+      <div class="pulsa-terminal-body">
+        <div><span class="pulsa-terminal-prompt">$ </span><span class="pulsa-terminal-cmd">npm install pulsa-css</span></div>
+        <div class="pulsa-terminal-out">added 1 package in 0.8s</div>
+        <div><span class="pulsa-terminal-prompt">$ </span><span class="pulsa-terminal-cmd">npm run build</span></div>
+        <div class="pulsa-terminal-out">✓ built in 324ms</div>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;!-- Code block --&gt;
+&lt;div class="pulsa-code-block"&gt;
+  &lt;div class="pulsa-code-block-header"&gt;
+    &lt;span class="pulsa-code-block-lang"&gt;JavaScript&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;pre&gt;…code…&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;!-- Terminal style --&gt;
+&lt;div class="pulsa-terminal"&gt;
+  &lt;div class="pulsa-terminal-header"&gt;
+    &lt;div class="pulsa-terminal-dot"&gt;&lt;/div&gt;
+    &lt;div class="pulsa-terminal-dot"&gt;&lt;/div&gt;
+    &lt;div class="pulsa-terminal-dot"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-terminal-body"&gt;
+    &lt;span class="pulsa-terminal-prompt"&gt;$ &lt;/span&gt;
+    &lt;span class="pulsa-terminal-cmd"&gt;npm install pulsa-css&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- CHART -->
+<section class="sec" id="chart-sec">
+  <h2 class="sec-h">Charts CSS</h2>
+  <div class="sub"><h3 class="sub-h">Barres horizontales</h3>
+  <div class="demo col">
+    <div class="pulsa-chart-bar" style="width:100%">
+      <div class="pulsa-chart-row"><span class="pulsa-chart-label">JavaScript</span><div class="pulsa-chart-track"><div class="pulsa-chart-fill" style="width:89%"></div></div><span class="pulsa-chart-val">89%</span></div>
+      <div class="pulsa-chart-row"><span class="pulsa-chart-label">TypeScript</span><div class="pulsa-chart-track"><div class="pulsa-chart-fill" style="width:74%"></div></div><span class="pulsa-chart-val">74%</span></div>
+      <div class="pulsa-chart-row"><span class="pulsa-chart-label">Python</span><div class="pulsa-chart-track"><div class="pulsa-chart-fill" style="width:61%;background:var(--success)"></div></div><span class="pulsa-chart-val">61%</span></div>
+      <div class="pulsa-chart-row"><span class="pulsa-chart-label">Rust</span><div class="pulsa-chart-track"><div class="pulsa-chart-fill" style="width:34%;background:var(--warning)"></div></div><span class="pulsa-chart-val">34%</span></div>
+    </div>
+  </div></div>
+
+  <div class="sub"><h3 class="sub-h">Barres verticales</h3>
+  <div class="demo">
+    <div class="pulsa-chart-v" style="width:100%;height:140px">
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:40%"></div><span class="pulsa-chart-v-label">Lun</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:72%"></div><span class="pulsa-chart-v-label">Mar</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:60%"></div><span class="pulsa-chart-v-label">Mer</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:90%"></div><span class="pulsa-chart-v-label">Jeu</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:55%"></div><span class="pulsa-chart-v-label">Ven</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:30%;background:var(--success)"></div><span class="pulsa-chart-v-label">Sam</span></div>
+      <div class="pulsa-chart-v-bar"><div class="pulsa-chart-v-fill" style="height:20%;background:var(--success)"></div><span class="pulsa-chart-v-label">Dim</span></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;!-- Horizontal --&gt;
+&lt;div class="pulsa-chart-bar"&gt;
+  &lt;div class="pulsa-chart-row"&gt;
+    &lt;span class="pulsa-chart-label"&gt;JavaScript&lt;/span&gt;
+    &lt;div class="pulsa-chart-track"&gt;
+      &lt;div class="pulsa-chart-fill" style="width:89%"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="pulsa-chart-val"&gt;89%&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Vertical --&gt;
+&lt;div class="pulsa-chart-v"&gt;
+  &lt;div class="pulsa-chart-v-bar"&gt;
+    &lt;div class="pulsa-chart-v-fill" style="height:72%"&gt;&lt;/div&gt;
+    &lt;span class="pulsa-chart-v-label"&gt;Mar&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div></div>
+</section>
+
+<!-- DRAWER -->
+<section class="sec" id="drawer">
+  <h2 class="sec-h">Drawer / Offcanvas</h2>
+  <div class="demo c">
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="document.getElementById('demoDrawer').classList.add('open');document.getElementById('demoOverlay').classList.add('open')">Ouvrir le Drawer →</button>
+  </div>
+  <div class="pulsa-drawer-overlay" id="demoOverlay" onclick="document.getElementById('demoDrawer').classList.remove('open');this.classList.remove('open')"></div>
+  <div class="pulsa-drawer pulsa-drawer-right" id="demoDrawer">
+    <div class="pulsa-drawer-header">
+      <span class="pulsa-drawer-title">Filtres</span>
+      <button class="pulsa-drawer-close" onclick="document.getElementById('demoDrawer').classList.remove('open');document.getElementById('demoOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="pulsa-drawer-body">
+      <div class="pulsa-field"><label class="pulsa-field-label">Catégorie</label><input class="pulsa-input" type="text" placeholder="Ex: Design"/></div>
+      <div class="pulsa-field" style="margin-top:1rem"><label class="pulsa-field-label">Prix max</label><input class="pulsa-input" type="range" min="0" max="1000" value="500"/></div>
+      <div style="margin-top:1rem;display:flex;flex-direction:column;gap:.625rem">
+        <label class="pulsa-toggle"><input type="checkbox" checked/><span class="pulsa-toggle-track"></span><span class="pulsa-toggle-label">En stock seulement</span></label>
+        <label class="pulsa-toggle"><input type="checkbox"/><span class="pulsa-toggle-track"></span><span class="pulsa-toggle-label">Promotions</span></label>
+      </div>
+    </div>
+    <div class="pulsa-drawer-footer">
+      <button class="pulsa-btn pulsa-btn-secondary" style="flex:1">Réinitialiser</button>
+      <button class="pulsa-btn pulsa-btn-primary" style="flex:1">Appliquer</button>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-drawer-overlay" id="ov" onclick="close()"&gt;&lt;/div&gt;
+&lt;div class="pulsa-drawer pulsa-drawer-right" id="drawer"&gt;
+  &lt;div class="pulsa-drawer-header"&gt;
+    &lt;span class="pulsa-drawer-title"&gt;Filtres&lt;/span&gt;
+    &lt;button class="pulsa-drawer-close" onclick="close()"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-drawer-body"&gt;…&lt;/div&gt;
+  &lt;div class="pulsa-drawer-footer"&gt;
+    &lt;button class="pulsa-btn pulsa-btn-primary"&gt;Appliquer&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- .pulsa-drawer-left | .pulsa-drawer-right --&gt;
+&lt;!-- Ouvrir : .classList.add('open') sur les deux --&gt;</code></pre></div>
+</section>
+
+<!-- KANBAN -->
+<section class="sec" id="kanban">
+  <h2 class="sec-h">Kanban Board</h2>
+  <div class="demo p0" style="padding:1rem;overflow-x:auto;background:var(--bg-secondary)">
+    <div class="pulsa-kanban" style="width:max-content;min-width:100%">
+      <div class="pulsa-kanban-col">
+        <div class="pulsa-kanban-header"><span class="pulsa-kanban-title">À faire</span><span class="pulsa-kanban-count">3</span></div>
+        <div class="pulsa-kanban-items">
+          <div class="pulsa-kanban-card"><p class="pulsa-kanban-card-title">Refonte homepage</p><p class="pulsa-kanban-card-desc">Mettre à jour le hero et la section features.</p><div class="pulsa-kanban-card-footer"><div class="pulsa-avatar pulsa-avatar-xs" style="background:var(--accent-soft);color:var(--accent)">J</div><span class="pulsa-badge pulsa-badge-warning">Design</span></div></div>
+          <div class="pulsa-kanban-card"><p class="pulsa-kanban-card-title">Optimisation images</p><p class="pulsa-kanban-card-desc">WebP + lazy loading sur toutes les pages.</p></div>
+        </div>
+        <button class="pulsa-kanban-add">+ Ajouter une tâche</button>
+      </div>
+      <div class="pulsa-kanban-col">
+        <div class="pulsa-kanban-header"><span class="pulsa-kanban-title" style="color:var(--accent)">En cours</span><span class="pulsa-kanban-count">2</span></div>
+        <div class="pulsa-kanban-items">
+          <div class="pulsa-kanban-card" style="border-color:var(--accent)"><p class="pulsa-kanban-card-title">Système de design</p><p class="pulsa-kanban-card-desc">Créer les tokens et composants de base.</p><div class="pulsa-kanban-card-footer"><div class="pulsa-avatar pulsa-avatar-xs" style="background:var(--success-soft);color:var(--success)">M</div><span class="pulsa-badge pulsa-badge-accent">Dev</span></div></div>
+        </div>
+        <button class="pulsa-kanban-add">+ Ajouter une tâche</button>
+      </div>
+      <div class="pulsa-kanban-col">
+        <div class="pulsa-kanban-header"><span class="pulsa-kanban-title" style="color:var(--success)">Terminé</span><span class="pulsa-kanban-count">5</span></div>
+        <div class="pulsa-kanban-items">
+          <div class="pulsa-kanban-card" style="opacity:.6"><p class="pulsa-kanban-card-title">Setup du projet</p><p class="pulsa-kanban-card-desc">Initialisation, CI/CD, environnements.</p></div>
+        </div>
+        <button class="pulsa-kanban-add">+ Ajouter une tâche</button>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-kanban"&gt;
+  &lt;div class="pulsa-kanban-col"&gt;
+    &lt;div class="pulsa-kanban-header"&gt;
+      &lt;span class="pulsa-kanban-title"&gt;À faire&lt;/span&gt;
+      &lt;span class="pulsa-kanban-count"&gt;3&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="pulsa-kanban-items"&gt;
+      &lt;div class="pulsa-kanban-card"&gt;
+        &lt;p class="pulsa-kanban-card-title"&gt;Tâche&lt;/p&gt;
+        &lt;p class="pulsa-kanban-card-desc"&gt;Description…&lt;/p&gt;
+        &lt;div class="pulsa-kanban-card-footer"&gt;…&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="pulsa-kanban-add"&gt;+ Ajouter&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- ERROR PAGE -->
+<section class="sec" id="error-pg">
+  <h2 class="sec-h">Page 404</h2>
+  <div class="demo p0" style="background:var(--bg-secondary);padding:2rem;border-radius:var(--radius-lg)">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.25rem">
+      <div class="pulsa-error-code" style="font-size:5rem">404</div>
+      <h2 class="pulsa-error-title">Page introuvable</h2>
+      <p class="pulsa-error-desc">La page que tu cherches n'existe pas ou a été déplacée.</p>
+      <div class="pulsa-error-actions">
+        <a href="#" class="pulsa-btn pulsa-btn-primary">← Accueil</a>
+        <a href="#" class="pulsa-btn pulsa-btn-secondary">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-error-page"&gt;
+  &lt;div class="pulsa-error-code"&gt;404&lt;/div&gt;
+  &lt;h1 class="pulsa-error-title"&gt;Page introuvable&lt;/h1&gt;
+  &lt;p class="pulsa-error-desc"&gt;Description…&lt;/p&gt;
+  &lt;div class="pulsa-error-actions"&gt;
+    &lt;a href="/" class="pulsa-btn pulsa-btn-primary"&gt;← Accueil&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- COMING SOON -->
+<section class="sec" id="coming-soon">
+  <h2 class="sec-h">Coming Soon</h2>
+  <div class="demo p0" style="background:var(--bg-secondary);padding:2rem">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem">
+      <div class="pulsa-overline">Bientôt disponible</div>
+      <h1 class="pulsa-h1">On arrive !</h1>
+      <div class="pulsa-countdown">
+        <div class="pulsa-countdown-unit"><div class="pulsa-countdown-value">12</div><div class="pulsa-countdown-label">Jours</div></div>
+        <div class="pulsa-countdown-unit"><div class="pulsa-countdown-value">04</div><div class="pulsa-countdown-label">Heures</div></div>
+        <div class="pulsa-countdown-unit"><div class="pulsa-countdown-value">38</div><div class="pulsa-countdown-label">Minutes</div></div>
+        <div class="pulsa-countdown-unit"><div class="pulsa-countdown-value">17</div><div class="pulsa-countdown-label">Secondes</div></div>
+      </div>
+      <div class="pulsa-newsletter-form"><input class="pulsa-input" type="email" placeholder="Email pour être notifié"/><button class="pulsa-btn pulsa-btn-primary">Notifie-moi</button></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-countdown"&gt;
+  &lt;div class="pulsa-countdown-unit"&gt;
+    &lt;div class="pulsa-countdown-value" id="days"&gt;12&lt;/div&gt;
+    &lt;div class="pulsa-countdown-label"&gt;Jours&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="pulsa-countdown-unit"&gt;
+    &lt;div class="pulsa-countdown-value" id="hours"&gt;04&lt;/div&gt;
+    &lt;div class="pulsa-countdown-label"&gt;Heures&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- DATA KEY-VALUE -->
+<section class="sec" id="data-list">
+  <h2 class="sec-h">Data Key-Value</h2>
+  <div class="demo col" style="max-width:480px">
+    <div class="pulsa-data-list" style="width:100%">
+      <div class="pulsa-data-row"><span class="pulsa-data-key">Navigateur</span><span class="pulsa-data-val">Chrome 121</span></div>
+      <div class="pulsa-data-row"><span class="pulsa-data-key">Système</span><span class="pulsa-data-val">Windows 11 Pro</span></div>
+      <div class="pulsa-data-row"><span class="pulsa-data-key">Résolution</span><span class="pulsa-data-val">2560 × 1440</span></div>
+      <div class="pulsa-data-row"><span class="pulsa-data-key">IP</span><span class="pulsa-data-val"><code class="pulsa-code-inline">192.168.1.42</code></span></div>
+      <div class="pulsa-data-row"><span class="pulsa-data-key">Statut</span><span class="pulsa-data-val"><span class="pulsa-badge pulsa-badge-success">Actif</span></span></div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-data-list"&gt;
+  &lt;div class="pulsa-data-row"&gt;
+    &lt;span class="pulsa-data-key"&gt;Statut&lt;/span&gt;
+    &lt;span class="pulsa-data-val"&gt;Actif&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- COOKIE -->
+<section class="sec" id="cookie">
+  <h2 class="sec-h">Cookie Banner</h2>
+  <div class="demo col" style="position:relative;min-height:120px">
+    <div class="pulsa-cookie" style="position:relative;bottom:auto;left:auto;right:auto;max-width:none;animation:none">
+      <p class="pulsa-cookie-title">🍪 Nous utilisons des cookies</p>
+      <p class="pulsa-cookie-text">En continuant sur ce site, tu acceptes notre politique de cookies. Nous n'utilisons que des cookies essentiels.</p>
+      <div class="pulsa-cookie-actions">
+        <button class="pulsa-btn pulsa-btn-primary pulsa-btn-sm">Accepter</button>
+        <button class="pulsa-btn pulsa-btn-secondary pulsa-btn-sm">Personnaliser</button>
+        <button class="pulsa-btn pulsa-btn-ghost pulsa-btn-sm">Refuser</button>
+      </div>
+    </div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-cookie"&gt;  &lt;!-- fixed bottom-right --&gt;
+  &lt;p class="pulsa-cookie-title"&gt;🍪 Cookies&lt;/p&gt;
+  &lt;p class="pulsa-cookie-text"&gt;Description…&lt;/p&gt;
+  &lt;div class="pulsa-cookie-actions"&gt;
+    &lt;button class="pulsa-btn pulsa-btn-primary"&gt;Accepter&lt;/button&gt;
+    &lt;button class="pulsa-btn pulsa-btn-ghost"&gt;Refuser&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</section>
+
+<!-- ANIMATIONS -->
+<section class="sec" id="animations">
+  <h2 class="sec-h">Animations — Entrées</h2>
+  <div class="demo" style="flex-wrap:wrap;gap:.625rem">
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-fade-in')">fade-in</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-fade-in-up')">fade-in-up</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-fade-in-down')">fade-in-down</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-scale-in')">scale-in</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-scale-bounce')">scale-bounce</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-slide-left')">slide-left</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-slide-right')">slide-right</button>
+    <button class="pulsa-btn pulsa-btn-secondary" onclick="replay(this,'pulsa-animate-pop')">pop</button>
+    <button class="pulsa-btn pulsa-btn-danger"    onclick="replay(this,'pulsa-animate-shake')">shake</button>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-animate-fade-in"&gt;…&lt;/div&gt;
+&lt;div class="pulsa-animate-scale-bounce"&gt;…&lt;/div&gt;
+&lt;div class="pulsa-animate-slide-left"&gt;…&lt;/div&gt;</code></pre></div>
+</section>
+
+<section class="sec" id="hover-fx">
+  <h2 class="sec-h">Hover Effects</h2>
+  <div class="demo" style="gap:1rem;flex-wrap:wrap">
+    <div class="pulsa-card pulsa-hover-lift"          style="padding:1rem;cursor:pointer;min-width:100px;text-align:center">lift</div>
+    <div class="pulsa-card pulsa-hover-scale"         style="padding:1rem;cursor:pointer;min-width:100px;text-align:center">scale</div>
+    <div class="pulsa-card pulsa-hover-glow"          style="padding:1rem;cursor:pointer;min-width:100px;text-align:center">glow</div>
+    <div class="pulsa-card pulsa-hover-accent-border" style="padding:1rem;cursor:pointer;min-width:100px;text-align:center">border</div>
+    <div class="pulsa-card pulsa-hover-bright"        style="padding:1rem;cursor:pointer;min-width:100px;text-align:center">bright</div>
+  </div>
+</section>
+
+<section class="sec" id="stagger">
+  <h2 class="sec-h">Stagger Delays</h2>
+  <div class="demo" style="gap:.5rem;flex-wrap:wrap">
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-0"   style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">1</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-100" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">2</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-200" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">3</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-300" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">4</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-400" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">5</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-500" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">6</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-600" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">7</div>
+    <div class="pulsa-card pulsa-animate-fade-in pulsa-delay-700" style="padding:.875rem;min-width:44px;text-align:center;font-weight:700">8</div>
+  </div>
+  <div class="code"><button class="cp">Copier</button>
+<pre><code class="language-html">&lt;div class="pulsa-animate-fade-in pulsa-delay-0"&gt;1&lt;/div&gt;
+&lt;div class="pulsa-animate-fade-in pulsa-delay-100"&gt;2&lt;/div&gt;
+&lt;!-- delay: 0 | 50 | 100 | 150 | 200 | 300 | 400 | 500 | 600 | 700 | 800 --&gt;</code></pre></div>
+</section>
+
+<!-- UTILITIES -->
+<section class="sec" id="utilities">
+  <h2 class="sec-h">Utilitaires</h2>
+  <div style="overflow-x:auto;width:100%">
+    <table class="at">
+      <thead><tr><th>Catégorie</th><th>Exemples</th><th>Détails</th></tr></thead>
+      <tbody>
+        <tr><td>Container</td><td><code class="mn">pulsa-container</code></td><td>xs/sm/md/lg/xl/fluid</td></tr>
+        <tr><td>Grid</td><td><code class="mn">pulsa-grid-3</code></td><td>2/3/4/auto/auto-sm/auto-lg</td></tr>
+        <tr><td>Colonnes</td><td><code class="mn">pulsa-col-6</code></td><td>1 à 12</td></tr>
+        <tr><td>Display</td><td><code class="mn">pulsa-flex</code> <code class="mn">pulsa-block</code></td><td>inline, hidden</td></tr>
+        <tr><td>Flex</td><td><code class="mn">pulsa-flex-col</code> <code class="mn">pulsa-items-center</code></td><td>direction, wrap, align, justify</td></tr>
+        <tr><td>Gap</td><td><code class="mn">pulsa-gap-4</code></td><td>1 à 10</td></tr>
+        <tr><td>Margin</td><td><code class="mn">pulsa-mb-4</code> <code class="mn">pulsa-mx-auto</code></td><td>mt/mb/ml/mr/mx/my 1-8</td></tr>
+        <tr><td>Padding</td><td><code class="mn">pulsa-p-4</code> <code class="mn">pulsa-px-6</code></td><td>p/px/py/pt/pb 1-8</td></tr>
+        <tr><td>Width</td><td><code class="mn">pulsa-w-full</code> <code class="mn">pulsa-w-auto</code></td><td>full, auto, 1/2, 1/3, 2/3, 1/4</td></tr>
+        <tr><td>Typographie</td><td><code class="mn">pulsa-text-sm</code> <code class="mn">pulsa-font-bold</code></td><td>xs/sm/base/lg/xl/2xl + weights</td></tr>
+        <tr><td>Couleurs texte</td><td><code class="mn">pulsa-text-accent</code></td><td>primary/secondary/muted/accent/success/danger</td></tr>
+        <tr><td>Couleurs fond</td><td><code class="mn">pulsa-bg-card</code></td><td>primary/secondary/card/elevated</td></tr>
+        <tr><td>Border</td><td><code class="mn">pulsa-border</code> <code class="mn">pulsa-rounded</code></td><td>rounded, rounded-full, border-accent</td></tr>
+        <tr><td>Shadow</td><td><code class="mn">pulsa-shadow-lg</code></td><td>sm/md/lg</td></tr>
+        <tr><td>Overflow</td><td><code class="mn">pulsa-overflow-hidden</code></td><td>hidden/auto/x-auto</td></tr>
+        <tr><td>Position</td><td><code class="mn">pulsa-relative</code></td><td>relative/absolute/fixed/sticky</td></tr>
+        <tr><td>Opacity</td><td><code class="mn">pulsa-opacity-50</code></td><td>0/25/50/75/90/100</td></tr>
+        <tr><td>Cursor</td><td><code class="mn">pulsa-cursor-pointer</code></td><td>pointer/not-allowed/grab</td></tr>
+        <tr><td>A11y</td><td><code class="mn">pulsa-sr-only</code></td><td>visually hidden</td></tr>
+        <tr><td>Responsive</td><td><code class="mn">pulsa-hidden-mobile</code></td><td>hidden-mobile/hidden-desktop/full-mobile</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid var(--border);padding:2rem 0;margin-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:var(--text-sm);color:var(--text-muted)">
+  <div><strong style="color:var(--text-primary)">Pulsa CSS v2.0</strong> — Framework universel par PulsaHub</div>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+    <span>9 fichiers CSS</span>
+    <span>500+ composants</span>
+    <span>0 dépendances JS</span>
+    <span>MIT License</span>
+    <a href="https://github.com/gabrielrevest/PulsaHub" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">GitHub</a>
+  </div>
+</footer>
+</main>
+</div>
+
+<div class="pulsa-toast-container" id="tc"></div>
+<button id="btt" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+<script>
+const html = document.documentElement;
+
+/* Theme */
+document.getElementById('tb').addEventListener('click', () => {
+  const d = html.dataset.theme !== 'light';
+  html.dataset.theme = d ? 'light' : 'dark';
+  document.getElementById('tb').textContent = d ? '🌙' : '☀️';
+});
+
+/* Accents */
+document.querySelectorAll('.dac').forEach(d => d.addEventListener('click', () => {
+  document.querySelectorAll('.dac').forEach(x => x.classList.remove('on'));
+  d.classList.add('on'); html.dataset.accent = d.dataset.a;
+}));
+
+/* Copy */
+document.querySelectorAll('.cp').forEach(btn => btn.addEventListener('click', () => {
+  const code = btn.nextElementSibling?.querySelector('code')?.textContent || '';
+  navigator.clipboard.writeText(code.trim()).then(() => {
+    btn.textContent = '✓'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copier'; btn.classList.remove('ok'); }, 1800);
+  });
+}));
+
+/* Mobile sidebar */
+const sb = document.getElementById('sb'), ov = document.getElementById('ov');
+document.getElementById('burg').addEventListener('click', () => { sb.classList.toggle('open'); ov.classList.toggle('open'); });
+ov.addEventListener('click', () => { sb.classList.remove('open'); ov.classList.remove('open'); });
+
+/* Sidebar filter */
+document.getElementById('sbs').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.ds-a').forEach(a => { a.style.display = a.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+  document.querySelectorAll('.ds-g').forEach(g => {
+    const v = [...g.querySelectorAll('.ds-a')].some(a => a.style.display !== 'none');
+    g.style.display = v ? '' : 'none';
+  });
+});
+
+/* Nav search → sidebar */
+document.getElementById('ns').addEventListener('input', function() {
+  document.getElementById('sbs').value = this.value;
+  document.getElementById('sbs').dispatchEvent(new Event('input'));
+});
+
+/* Ctrl+K */
+document.addEventListener('keydown', e => { if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); document.getElementById('ns').focus(); } });
+
+/* Scrollspy */
+const links = document.querySelectorAll('.ds-a');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('on'));
+      const a = document.querySelector(`.ds-a[href="#${e.target.id}"]`);
+      if (a) { a.classList.add('on'); a.scrollIntoView({ block:'nearest', behavior:'smooth' }); }
+    }
+  });
+}, { rootMargin:'-5% 0px -88% 0px' });
+document.querySelectorAll('[id]').forEach(s => io.observe(s));
+
+/* Replay animation */
+function replay(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); el.addEventListener('animationend', () => el.classList.remove(cls), { once:true }); }
+
+/* FAQ */
+document.querySelectorAll('.pulsa-faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.pulsa-faq-item');
+    const open = item.classList.toggle('open');
+    const ans = item.querySelector('.pulsa-faq-answer');
+    if (ans) ans.style.display = open ? 'block' : 'none';
+  });
+  const item = q.closest('.pulsa-faq-item');
+  if (!item.classList.contains('open')) { const a = item.querySelector('.pulsa-faq-answer'); if (a) a.style.display = 'none'; }
+});
+
+/* Accordion */
+document.querySelectorAll('.pulsa-accordion-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const open = h.getAttribute('aria-expanded') === 'true';
+    h.setAttribute('aria-expanded', !open);
+    const b = h.nextElementSibling;
+    if (b?.classList.contains('pulsa-accordion-body')) b.style.display = open ? 'none' : '';
+  });
+  if (h.getAttribute('aria-expanded') !== 'true') { const b = h.nextElementSibling; if (b?.classList.contains('pulsa-accordion-body')) b.style.display = 'none'; }
+});
+
+/* Toast */
+function showToast(type, title, desc) {
+  const icons = { success:'✅', danger:'🚨', warning:'⚠️', info:'ℹ️' };
+  const t = document.createElement('div');
+  t.className = `pulsa-toast ${type}`;
+  t.innerHTML = `<span class="pulsa-toast-icon">${icons[type]||'ℹ️'}</span><div class="pulsa-toast-body"><p class="pulsa-toast-title">${title}</p><p class="pulsa-toast-desc">${desc}</p></div><button class="pulsa-toast-close" onclick="this.closest('.pulsa-toast').remove()">✕</button>`;
+  document.getElementById('tc').appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+
+/* Back to top */
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => btt.classList.toggle('v', scrollY > 400), { passive:true });
+</script>
+</body>
+</html>

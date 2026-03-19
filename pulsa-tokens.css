@@ -1,0 +1,265 @@
+/**
+ * Pulsa CSS Framework - Design Tokens
+ * Variables CSS : couleurs, typographie, espacements, radius, ombres.
+ * Thèmes dark/light et accents configurables via data-theme et data-accent.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Radius */
+  --pulsa-radius: 14px;
+  --pulsa-radius-sm: 10px;
+  --pulsa-radius-lg: 18px;
+  --pulsa-radius-xl: 22px;
+
+  /* Typography */
+  --pulsa-font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --pulsa-font-mono: 'JetBrains Mono', monospace;
+  --pulsa-text-xs: 0.75rem;
+  --pulsa-text-sm: 0.875rem;
+  --pulsa-text-base: 1rem;
+  --pulsa-text-lg: 1.125rem;
+  --pulsa-text-xl: 1.25rem;
+  --pulsa-text-2xl: 1.5rem;
+  --pulsa-text-3xl: 1.75rem;
+  --pulsa-font-normal: 400;
+  --pulsa-font-medium: 500;
+  --pulsa-font-semibold: 600;
+  --pulsa-font-bold: 700;
+
+  /* Transitions */
+  --pulsa-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --pulsa-transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Aliases pour compatibilité (utilisent les tokens Pulsa) */
+:root {
+  --radius: var(--pulsa-radius);
+  --radius-sm: var(--pulsa-radius-sm);
+  --radius-lg: var(--pulsa-radius-lg);
+  --radius-xl: var(--pulsa-radius-xl);
+  --font-sans: var(--pulsa-font-sans);
+  --font-mono: var(--pulsa-font-mono);
+  --text-xs: var(--pulsa-text-xs);
+  --text-sm: var(--pulsa-text-sm);
+  --text-base: var(--pulsa-text-base);
+  --text-lg: var(--pulsa-text-lg);
+  --text-xl: var(--pulsa-text-xl);
+  --text-2xl: var(--pulsa-text-2xl);
+  --text-3xl: var(--pulsa-text-3xl);
+  --font-normal: var(--pulsa-font-normal);
+  --font-medium: var(--pulsa-font-medium);
+  --font-semibold: var(--pulsa-font-semibold);
+  --font-bold: var(--pulsa-font-bold);
+  --transition: var(--pulsa-transition);
+  --transition-smooth: var(--pulsa-transition-smooth);
+}
+
+/* ════════════════════════════════════════════════════════
+   SYSTÈME AUTO — suit la préférence OS si aucun data-theme
+   Peut être surchargé avec [data-theme="dark"|"light"]
+   ════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --pulsa-bg-primary: #f8fafc;
+    --pulsa-bg-secondary: #f1f5f9;
+    --pulsa-bg-card: #ffffff;
+    --pulsa-bg-elevated: #ffffff;
+    --pulsa-bg-tertiary: #e2e8f0;
+    --pulsa-bg-hover: rgba(0, 0, 0, 0.04);
+    --pulsa-text-primary: #0f172a;
+    --pulsa-text-secondary: #475569;
+    --pulsa-text-muted: #64748b;
+    --pulsa-success: #16a34a;
+    --pulsa-success-soft: rgba(22, 163, 74, 0.12);
+    --pulsa-warning: #d97706;
+    --pulsa-danger: #dc2626;
+    --pulsa-danger-soft: rgba(220, 38, 38, 0.12);
+    --pulsa-border: rgba(0, 0, 0, 0.08);
+    --pulsa-border-hover: rgba(0, 0, 0, 0.18);
+    --pulsa-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --pulsa-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --pulsa-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --bg-primary: var(--pulsa-bg-primary);
+    --bg-secondary: var(--pulsa-bg-secondary);
+    --bg-card: var(--pulsa-bg-card);
+    --bg-elevated: var(--pulsa-bg-elevated);
+    --bg-tertiary: var(--pulsa-bg-tertiary);
+    --bg-hover: var(--pulsa-bg-hover);
+    --text-primary: var(--pulsa-text-primary);
+    --text-secondary: var(--pulsa-text-secondary);
+    --text-muted: var(--pulsa-text-muted);
+    --success: var(--pulsa-success);
+    --success-soft: var(--pulsa-success-soft);
+    --warning: var(--pulsa-warning);
+    --danger: var(--pulsa-danger);
+    --danger-soft: var(--pulsa-danger-soft);
+    --border: var(--pulsa-border);
+    --shadow-sm: var(--pulsa-shadow-sm);
+    --shadow-md: var(--pulsa-shadow-md);
+    --shadow-lg: var(--pulsa-shadow-lg);
+  }
+}
+
+/* Transition douce lors du changement de thème */
+html {
+  color-scheme: dark light;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+*, *::before, *::after {
+  transition-property: background-color, border-color, box-shadow, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Dark theme (default) */
+:root,
+[data-theme="dark"] {
+  --pulsa-bg-primary: #0a0a0d;
+  --pulsa-bg-secondary: #121215;
+  --pulsa-bg-card: #18181c;
+  --pulsa-bg-elevated: #1e1e24;
+  --pulsa-bg-tertiary: #151518;
+  --pulsa-bg-hover: rgba(255, 255, 255, 0.04);
+  --pulsa-text-primary: #f4f4f5;
+  --pulsa-text-secondary: #a1a1aa;
+  --pulsa-text-muted: #8b8b95;
+  --pulsa-success: #22c55e;
+  --pulsa-success-soft: rgba(34, 197, 94, 0.15);
+  --pulsa-warning: #eab308;
+  --pulsa-danger: #ef4444;
+  --pulsa-danger-soft: rgba(239, 68, 68, 0.15);
+  --pulsa-border: rgba(255, 255, 255, 0.07);
+  --pulsa-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --pulsa-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --pulsa-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --pulsa-bg-primary: #f8fafc;
+  --pulsa-bg-secondary: #f1f5f9;
+  --pulsa-bg-card: #ffffff;
+  --pulsa-bg-elevated: #ffffff;
+  --pulsa-bg-tertiary: #e2e8f0;
+  --pulsa-bg-hover: rgba(0, 0, 0, 0.04);
+  --pulsa-text-primary: #0f172a;
+  --pulsa-text-secondary: #475569;
+  --pulsa-text-muted: #64748b;
+  --pulsa-border: rgba(0, 0, 0, 0.08);
+  --pulsa-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --pulsa-shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --pulsa-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Aliases thème */
+:root,
+[data-theme="dark"] {
+  --bg-primary: var(--pulsa-bg-primary);
+  --bg-secondary: var(--pulsa-bg-secondary);
+  --bg-card: var(--pulsa-bg-card);
+  --bg-elevated: var(--pulsa-bg-elevated);
+  --bg-tertiary: var(--pulsa-bg-tertiary);
+  --bg-hover: var(--pulsa-bg-hover);
+  --text-primary: var(--pulsa-text-primary);
+  --text-secondary: var(--pulsa-text-secondary);
+  --text-muted: var(--pulsa-text-muted);
+  --success: var(--pulsa-success);
+  --success-soft: var(--pulsa-success-soft);
+  --warning: var(--pulsa-warning);
+  --danger: var(--pulsa-danger);
+  --danger-soft: var(--pulsa-danger-soft);
+  --border: var(--pulsa-border);
+  --shadow-sm: var(--pulsa-shadow-sm);
+  --shadow-md: var(--pulsa-shadow-md);
+  --shadow-lg: var(--pulsa-shadow-lg);
+}
+
+[data-theme="light"] {
+  --bg-primary: var(--pulsa-bg-primary);
+  --bg-secondary: var(--pulsa-bg-secondary);
+  --bg-card: var(--pulsa-bg-card);
+  --bg-elevated: var(--pulsa-bg-elevated);
+  --bg-tertiary: var(--pulsa-bg-tertiary);
+  --bg-hover: var(--pulsa-bg-hover);
+  --text-primary: var(--pulsa-text-primary);
+  --text-secondary: var(--pulsa-text-secondary);
+  --text-muted: var(--pulsa-text-muted);
+  --border: var(--pulsa-border);
+  --shadow-sm: var(--pulsa-shadow-sm);
+  --shadow-md: var(--pulsa-shadow-md);
+  --shadow-lg: var(--pulsa-shadow-lg);
+}
+
+/* Accent colors */
+[data-accent="purple"] {
+  --pulsa-accent: #8b5cf6;
+  --pulsa-accent-hover: #7c3aed;
+  --pulsa-accent-soft: rgba(139, 92, 246, 0.15);
+  --pulsa-accent-glow: rgba(139, 92, 246, 0.35);
+  --pulsa-border-hover: rgba(139, 92, 246, 0.25);
+}
+[data-accent="blue"] {
+  --pulsa-accent: #3b82f6;
+  --pulsa-accent-hover: #2563eb;
+  --pulsa-accent-soft: rgba(59, 130, 246, 0.15);
+  --pulsa-accent-glow: rgba(59, 130, 246, 0.35);
+  --pulsa-border-hover: rgba(59, 130, 246, 0.25);
+}
+[data-accent="green"] {
+  --pulsa-accent: #22c55e;
+  --pulsa-accent-hover: #16a34a;
+  --pulsa-accent-soft: rgba(34, 197, 94, 0.15);
+  --pulsa-accent-glow: rgba(34, 197, 94, 0.35);
+  --pulsa-border-hover: rgba(34, 197, 94, 0.25);
+}
+[data-accent="orange"] {
+  --pulsa-accent: #f97316;
+  --pulsa-accent-hover: #ea580c;
+  --pulsa-accent-soft: rgba(249, 115, 22, 0.15);
+  --pulsa-accent-glow: rgba(249, 115, 22, 0.35);
+  --pulsa-border-hover: rgba(249, 115, 22, 0.25);
+}
+[data-accent="rose"] {
+  --pulsa-accent: #f43f5e;
+  --pulsa-accent-hover: #e11d48;
+  --pulsa-accent-soft: rgba(244, 63, 94, 0.15);
+  --pulsa-accent-glow: rgba(244, 63, 94, 0.35);
+  --pulsa-border-hover: rgba(244, 63, 94, 0.25);
+}
+[data-accent="pink"] {
+  --pulsa-accent: #ec4899;
+  --pulsa-accent-hover: #db2777;
+  --pulsa-accent-soft: rgba(236, 72, 153, 0.15);
+  --pulsa-accent-glow: rgba(236, 72, 153, 0.35);
+  --pulsa-border-hover: rgba(236, 72, 153, 0.25);
+}
+
+/* Default accent (rose) */
+:root:not([data-accent]) {
+  --pulsa-accent: #f43f5e;
+  --pulsa-accent-hover: #e11d48;
+  --pulsa-accent-soft: rgba(244, 63, 94, 0.15);
+  --pulsa-accent-glow: rgba(244, 63, 94, 0.35);
+  --pulsa-border-hover: rgba(244, 63, 94, 0.25);
+  --accent: var(--pulsa-accent);
+  --accent-hover: var(--pulsa-accent-hover);
+  --accent-soft: var(--pulsa-accent-soft);
+  --accent-glow: var(--pulsa-accent-glow);
+  --border-hover: var(--pulsa-border-hover);
+}
+
+/* Aliases accent pour data-accent défini */
+[data-accent="purple"],
+[data-accent="blue"],
+[data-accent="green"],
+[data-accent="orange"],
+[data-accent="rose"],
+[data-accent="pink"] {
+  --accent: var(--pulsa-accent);
+  --accent-hover: var(--pulsa-accent-hover);
+  --accent-soft: var(--pulsa-accent-soft);
+  --accent-glow: var(--pulsa-accent-glow);
+  --border-hover: var(--pulsa-border-hover);
+}
