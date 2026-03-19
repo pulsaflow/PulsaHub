@@ -1,5 +1,5 @@
 # Déploiement automatique sur GitHub Pages
-# Le site sera disponible à : https://gabrielrevest.github.io/PulsaHub/
+# Site : https://gabrielrevest.github.io/PulsaHub/
 name: Deploy to GitHub Pages
 
 on:
