@@ -1,0 +1,51 @@
+{
+  "name": "pulsaspace",
+  "version": "0.1.0",
+  "description": "Analyseur d'espace disque et nettoyeur système — WinDirStat + CCleaner réunis",
+  "author": "Gabriel Revest",
+  "repository": "github:gabrielrevest/PulsaSpace",
+  "keywords": [
+    "disk",
+    "space",
+    "analyzer",
+    "cleaner",
+    "electron",
+    "react"
+  ],
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5174 && electron .\"",
+    "electron:build": "vite build && electron-builder"
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "vite": "^5.4.10",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.pulsaspace.app",
+    "productName": "PulsaSpace",
+    "directories": { "output": "dist-electron" },
+    "files": ["dist/**/*", "electron/**/*"],
+    "win": {
+      "target": ["nsis", "portable"],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": ["fr_FR", "en_US"]
+    }
+  }
+}

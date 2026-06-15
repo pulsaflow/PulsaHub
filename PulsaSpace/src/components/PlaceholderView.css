@@ -1,0 +1,50 @@
+/**
+ * Vues placeholder (Démarrage, À propos)
+ */
+
+.placeholder-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-12);
+  text-align: center;
+}
+
+.placeholder-icon {
+  color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+.placeholder-view h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.placeholder-view p {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 400px;
+}
+
+.placeholder-badge {
+  padding: var(--space-2) var(--space-4);
+  background: var(--status-info-bg);
+  color: var(--status-info);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+}
+
+.placeholder-version {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.placeholder-credits {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}

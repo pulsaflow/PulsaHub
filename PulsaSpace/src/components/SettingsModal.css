@@ -1,0 +1,70 @@
+/**
+ * Modal Paramètres
+ */
+
+.settings-modal {
+  max-width: 420px;
+  width: 100%;
+}
+
+.settings-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.settings-modal-header h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.settings-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.settings-modal-close:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.settings-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+}
+
+.settings-theme-buttons {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.pulsa-btn-secondary--active {
+  background: var(--bg-active);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}

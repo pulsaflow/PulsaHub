@@ -1,0 +1,104 @@
+/**
+ * Barre de titre style Windows 11
+ */
+
+.title-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 48px;
+  padding: 0 0 0 16px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+}
+
+.title-bar-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+  -webkit-app-region: drag;
+}
+
+.title-bar-logo {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--gradient-hero);
+  color: var(--text-on-accent);
+}
+
+.title-bar-logo-icon {
+  flex-shrink: 0;
+}
+
+.title-bar-name {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title-bar-actions {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  -webkit-app-region: no-drag;
+  height: 48px;
+}
+
+.title-bar-btn {
+  width: 46px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.title-bar-btn svg {
+  opacity: 0.9;
+}
+
+.title-bar-btn-minimize:hover,
+.title-bar-btn-maximize:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.title-bar-btn-settings {
+  width: 40px;
+  color: var(--text-muted);
+}
+
+.title-bar-btn-settings:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.title-bar-btn-close:hover {
+  background: #e81123;
+  color: white;
+}
+
+.title-bar-btn-close:hover svg {
+  opacity: 1;
+}

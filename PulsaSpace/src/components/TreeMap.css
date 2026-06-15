@@ -1,0 +1,149 @@
+.treemap-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--pulsa-bg-darker);
+  border-radius: var(--pulsa-radius-md);
+  border: 1px dashed var(--pulsa-border);
+}
+
+.treemap-empty-text {
+  color: var(--pulsa-text-muter);
+  font-size: 13px;
+}
+
+.treemap-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--pulsa-bg-darker);
+  border-radius: var(--pulsa-radius-md);
+}
+
+.treemap-rect {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.treemap-rect-selected {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  z-index: 5;
+}
+
+.treemap-group {
+  border: 1px solid;
+}
+
+.treemap-group-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  line-height: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.treemap-leaf {
+  border: 1px solid;
+  opacity: 0.85;
+}
+
+.treemap-leaf:hover {
+  opacity: 1;
+  z-index: 10;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+
+.treemap-leaf-label {
+  padding: 2px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  pointer-events: none;
+}
+
+.treemap-leaf-name {
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.treemap-leaf-size {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+.treemap-select-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+/* Tooltip fixed à l'écran */
+.treemap-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background-color: rgba(15, 15, 20, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--pulsa-border);
+  border-radius: var(--pulsa-radius-md);
+  padding: 8px 12px;
+  min-width: 150px;
+  max-width: 300px;
+  color: #fff;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  animation: tooltipFadeIn 0.15s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tooltip-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tooltip-path {
+  font-size: 11px;
+  color: var(--pulsa-text-muter);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.tooltip-size {
+  font-size: 12px;
+  color: var(--pulsa-accent);
+  font-weight: 500;
+}
